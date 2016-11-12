@@ -29,7 +29,17 @@
 			  <div class="chatArea">
 			    <ul class="messages"></ul>
 			  </div>
-			  <input class="inputMessage" placeholder="Type here..."/>
+
+			  <div id="chat-message-bar">
+				<input class="inputMessage" placeholder="Type here..."/>
+
+				<button id="tag-icon">Add Tag</button>
+			  	<select id="tag-select">
+				  <option value="question">Question</option>
+				  <option value="suggestion">Suggestion</option>
+				</select>
+			  </div>
+			  
 			</li>
 			<li class="login page">
 			  <div class="form">
@@ -44,6 +54,16 @@
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/javascripts/main.js"></script>
+
+	<script type="text/javascript">
+
+		document.getElementById('tag-select').style.display = "none";
+
+		document.getElementById('tag-icon').onclick = function(){
+			document.getElementById('tag-icon').style.display = "none";
+			document.getElementById('tag-select').style.display = "";
+		};
+	</script>
 
 </body>
 </html>
