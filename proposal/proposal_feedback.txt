@@ -1,0 +1,20 @@
+This proposal is fine and should be able to be achieved in the time you have
+left.
+
+Some unclear points:
+- Do professors (i.e. admins) add their courses to the listings? Can other users
+  create chat rooms as well?
+
+A few thoughts (feel free to ignore):
+- Fully anonymous users might be a bad idea, as it may lead to misbehaving
+  users. An alternative would be "Anonymous to Students", like Piazza.
+- Your sketch doesn't include how admin-related tasks will work, but I'm
+  assuming they'll just be additional screens/menu options.
+- If you have time, considering making it responsive, so that students that who
+  don't bring laptops could also use it on their phones.
+- Could optionally have a feature that allows people to queue up questions for
+  the instructor.
+
+Unrelated to the proposal:
+- Make sure all your dependencies are listed in package.json so that we can get
+  it up and running easily when marking (e.g. socket.io)
