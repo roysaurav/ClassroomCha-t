@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
+var profile = require('./routes/profile');
+var registration = require('./routes/registration');
 
 var app = express();
 var http = require('http').Server(app);
@@ -27,6 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chat);
+app.use('/profile', profile);
+app.use('/registration', registration);
 
 // Chat room stuff
 

@@ -144,15 +144,14 @@ ul {
 /* Input */
 
 .inputMessage {
-  border: 10px solid #000;
   bottom: 0;
-  height: 60px;
   left: 0;
-  outline: none;
-  padding-left: 10px;
   position: absolute;
+  outline: none;
+  float:left;
+  height: 40px;
   right: 0;
-  width: 100%;
+  width:90%;
 }
 
 #left-col {
@@ -175,4 +174,22 @@ ul {
   width:25%;
 }
 
+#chat-message-bar {
+  border: 10px solid #000;
+  bottom: 0;
+  height: 60px;
+  left: 0;
+  outline: none;
+  padding-left: 10px;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+#tag-select, #tag-icon {
+  float:left;
+  margin-left:90%;
+  height:100%;
+  width:10%;
+}
 
