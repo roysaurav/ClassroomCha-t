@@ -10,19 +10,19 @@ var messageSchema = new Schema(
             type: String, required: true
         },
 
-        time {
+        time: {
             type: Timestamp, required: true
         },
 
-        tag {
+        tag: {
             type: String, require: true
         },
 
-        course {
+        course: {
             type: String, required: true
         },
 
-        username {
+        username: {
             type: String, required: true
         }
     },
