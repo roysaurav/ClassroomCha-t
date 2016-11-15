@@ -21,6 +21,10 @@ var instructorSchema = new Schema(
             type: String, required: true,
         },
 
+	courses: {
+	    type: [String]
+	},
+
 	givenname: {
 	    type: String
 	},
@@ -32,7 +36,7 @@ var instructorSchema = new Schema(
     {
         collection: 'instructor'
     }
-);
+)
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
 mongoose.connect('mongodb://localhost/instructordb');

@@ -32,7 +32,7 @@ var adminSchema = new Schema(
     {
         collection: 'admin'
     }
-);
+)
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
 mongoose.connect('mongodb://localhost/admindb');
