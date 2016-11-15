@@ -3,31 +3,48 @@ var mongoose = require('mongoose');
 // Doc for Mongoose Schemas: http://mongoosejs.com/docs/guide
 var Schema = mongoose.Schema;
 
+/**
+ * Note that the database was loaded with data from a JSON file into a
+ * collection called gillers.
+ */
 var studentSchema = new Schema(
-
     {
         username: {
-            type: String, required: true
+            type: String, required: true, unique: true
         },
 
-        fullname: {
-            type: String
+        password: {
+            type: String, requried: true
         },
 
         email: {
-            type: String
+            type: String, required: true,
         },
 
-        courses: {
-            type: Array
-        }
+        studentnum: {
+            type: Number
+        },
 
+	givenname: {
+	    type: String
+	},
+
+	lastname: {
+	    type: String
+	},
+
+	year: {
+	    type: String
+	},
+
+	status: {
+	    type: String
+	}
     },
-
     {
         collection: 'students'
     }
-)
+);
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
 mongoose.connect('mongodb://localhost/studentdb');
