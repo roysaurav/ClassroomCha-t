@@ -25,6 +25,9 @@ $(function() {
 
   var socket = io();
 
+  let room = '';
+
+
   function addParticipantsMessage (data) {
     var message = '';
     if (data.numUsers === 1) {
@@ -263,4 +266,31 @@ $(function() {
   socket.on('stop typing', function (data) {
     removeChatTyping(data);
   });
+
+  /*
+   *
+   *  Set the onclick handlers for all the students classes.
+   *  Used to broadcast to a specific socket
+   *
+   */
+  function addHandlers(){
+    
+    let children = $('#class-list')[0].children;
+
+    for(let x = 0; x < children.length; x++){
+
+      $('#' + children[x].id).on('click', function(){
+        room = children[x].innerText;
+        socket.emit('join-room', room);
+      });
+
+    }
+
+  }
+
+  addHandlers();
+
+
+
+
 });

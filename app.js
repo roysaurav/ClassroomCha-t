@@ -36,21 +36,52 @@ app.use('/registration', registration);
 
 var numUsers = 0;
 
-io.on('connection', function (socket) {
+/*
+ *
+ * Socket is essentially a user
+ *
+ */
+
+io.sockets.on('connection', function (socket) {
   var addedUser = false;
+  let userRoom = '';
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
+    newMessage(socket, data);
+  });
+
+  // when the client emits 'add user', this listens and executes
+  socket.on('add user', function (username) {
+    addUser(socket, username, addedUser);
+  });
+
+  // when the user disconnects.. perform this
+  socket.on('disconnect', function () {
+    disconnect(socket, addedUser);
+  });
+
+  socket.on('join-room', function(room){
+    socket.join(room);
+    userRoom = room;
+  });
+
+});
+
+
+function newMessage(socket, data){
+
     // we tell the client to execute 'new message'
     socket.broadcast.emit('new message', {
       username: socket.username,
       message: data
     });
-  });
 
-  // when the client emits 'add user', this listens and executes
-  socket.on('add user', function (username) {
-    if (addedUser) return;
+}
+
+function addUser(socket, username, user){
+ 
+    if (user) return;
 
     // we store the username in the socket session for this client
     socket.username = username;
@@ -64,25 +95,12 @@ io.on('connection', function (socket) {
       username: socket.username,
       numUsers: numUsers
     });
-  });
 
-  // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
+}
 
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
-  });
-
-  // when the user disconnects.. perform this
-  socket.on('disconnect', function () {
-    if (addedUser) {
+function disconnect(socket, user){
+  
+    if (user) {
       --numUsers;
 
       // echo globally that this client has left
@@ -91,8 +109,8 @@ io.on('connection', function (socket) {
         numUsers: numUsers
       });
     }
-  });
-});
+
+}  
 
 http.listen(3000, function(){
     console.log('listening on *:3000');
