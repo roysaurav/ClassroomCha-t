@@ -43,22 +43,23 @@ var numUsers = 0;
  */
 
 io.sockets.on('connection', function (socket) {
+ 
   var addedUser = false;
   let userRoom = '';
 
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
-    newMessage(socket, data);
+    newMessage(socket, data, userRoom);
   });
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {
-    addUser(socket, username, addedUser);
+    addUser(socket, username, addedUser, userRoom);
   });
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
-    disconnect(socket, addedUser);
+    disconnect(socket, addedUser, userRoom);
   });
 
   socket.on('join-room', function(room){
@@ -69,17 +70,17 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-function newMessage(socket, data){
+function newMessage(socket, data, room){
 
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
+    socket.broadcast.to(room).emit('new message', {
       username: socket.username,
       message: data
     });
 
 }
 
-function addUser(socket, username, user){
+function addUser(socket, username, user, room){
  
     if (user) return;
 
@@ -91,20 +92,20 @@ function addUser(socket, username, user){
       numUsers: numUsers
     });
     // echo globally (all clients) that a person has connected
-    socket.broadcast.emit('user joined', {
+    socket.broadcast.to(room).emit('user joined', {
       username: socket.username,
       numUsers: numUsers
     });
 
 }
 
-function disconnect(socket, user){
+function disconnect(socket, user, room){
   
     if (user) {
       --numUsers;
 
       // echo globally that this client has left
-      socket.broadcast.emit('user left', {
+      socket.broadcast.to(room).emit('user left', {
         username: socket.username,
         numUsers: numUsers
       });
