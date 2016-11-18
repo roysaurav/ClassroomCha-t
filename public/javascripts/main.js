@@ -77,6 +77,11 @@ $(function() {
     addMessageElement($el, options);
   }
 
+  //Clear all the messages
+  function clearMessages(){
+    $('.messages')[0].innerHTML = '';
+  }
+
   // Adds the visual chat message to the message list
   function addChatMessage (data, options) {
     // Don't fade the message in if there is an 'X was typing'
@@ -231,12 +236,6 @@ $(function() {
   // Whenever the server emits 'login', log the login message
   socket.on('login', function (data) {
     connected = true;
-    // Display the welcome message
-    var message = "Welcome to Socket.IO Chat – ";
-    log(message, {
-      prepend: true
-    });
-    addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'new message', update the chat body
@@ -247,13 +246,11 @@ $(function() {
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', function (data) {
     log(data.username + ' joined');
-    addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function (data) {
     log(data.username + ' left');
-    addParticipantsMessage(data);
     removeChatTyping(data);
   });
 
@@ -280,8 +277,15 @@ $(function() {
     for(let x = 0; x < children.length; x++){
 
       $('#' + children[x].id).on('click', function(){
+        socket.emit('leave-room', room);
         room = children[x].innerText;
         socket.emit('join-room', room);
+        clearMessages();
+        
+        var message = "Welcome to " + room + "\'s Chat!";
+        log(message, {
+          prepend: true
+        });
       });
 
     }

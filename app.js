@@ -65,6 +65,15 @@ io.sockets.on('connection', function (socket) {
   socket.on('join-room', function(room){
     socket.join(room);
     userRoom = room;
+
+    console.log(userRoom);
+  });
+
+  socket.on('leave-room', function(room){
+    socket.leave(room);
+    userRoom = room;
+
+    console.log(userRoom);
   });
 
 });
