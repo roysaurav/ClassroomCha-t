@@ -9,6 +9,7 @@ var users = require('./routes/users');
 var chat = require('./routes/chat');
 var profile = require('./routes/profile');
 var registration = require('./routes/registration');
+var db_funcs = require('./routes/database-routes');
 
 var app = express();
 var http = require('http').Server(app);
@@ -22,7 +23,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,6 +32,8 @@ app.use('/users', users);
 app.use('/chat', chat);
 app.use('/profile', profile);
 app.use('/registration', registration);
+app.get('/get_messages', db_funcs.findByCourseName);
+app.post('/add_messages', db_funcs.addMessage);
 
 // Chat room stuff
 
@@ -65,15 +68,11 @@ io.sockets.on('connection', function (socket) {
   socket.on('join-room', function(room){
     socket.join(room);
     userRoom = room;
-
-    console.log(userRoom);
   });
 
   socket.on('leave-room', function(room){
     socket.leave(room);
     userRoom = room;
-
-    console.log(userRoom);
   });
 
 });

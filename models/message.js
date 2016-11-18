@@ -11,7 +11,7 @@ var messageSchema = new Schema(
         },
 
         time: {
-            type: Timestamp, required: true
+            type: Date, default: Date.now
         },
 
         tag: {

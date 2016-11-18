@@ -68,6 +68,20 @@ $(function() {
       });
       // tell server to execute 'new message' and send along one parameter
       socket.emit('new message', message);
+
+      /*
+       *  Save the new message to the database
+       */
+      var messages = {};
+      messages['username'] = username;
+      messages['content'] = message;
+      messages['course'] = room;
+      messages['tag'] = "0"; 
+
+      $.post('/add_messages', messages, function(resp){
+        console.log(resp);
+      });
+
     }
   }
 
@@ -210,7 +224,10 @@ $(function() {
         socket.emit('stop typing');
         typing = false;
       } else {
+
+        //This is called when the username is setup
         setUsername();
+
       }
     }
   });
@@ -244,7 +261,7 @@ $(function() {
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
-  socket.on('user joined', function (data) {
+  socket.on('user joined', function (data) {   
     log(data.username + ' joined');
   });
 
@@ -286,6 +303,17 @@ $(function() {
         log(message, {
           prepend: true
         });
+        
+        $.get('/get_messages', { course: room }, function(resp_data){
+          for(let x = 0; x < resp_data.length; x++){
+            addChatMessage({
+              username: resp_data[x]["username"],
+              message: resp_data[x]["content"]
+            });
+          }
+
+        });
+
       });
 
     }
