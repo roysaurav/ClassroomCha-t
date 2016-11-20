@@ -1,0 +1,10 @@
+[
+    {
+        "username": "Prof",
+        "password": "test",
+        "email": "prof@test.com",
+	"courses": ["CSC301","CSC309","CSC324","CSC384"],
+	"givenname": "Random",
+	"lastname": "Name"
+    }
+]

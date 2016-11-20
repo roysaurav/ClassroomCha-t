@@ -34,6 +34,7 @@ app.use('/profile', profile);
 app.use('/registration', registration);
 app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
+app.get('/get_instructor', db_funcs.findInstructor);
 
 // Chat room stuff
 

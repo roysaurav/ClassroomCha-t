@@ -35,7 +35,7 @@ var adminSchema = new Schema(
 )
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
-mongoose.connect('mongodb://localhost/admindb');
+//mongoose.connect('mongodb://localhost/userdb');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('Admin', adminSchema);

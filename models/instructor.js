@@ -39,7 +39,7 @@ var instructorSchema = new Schema(
 )
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
-mongoose.connect('mongodb://localhost/instructordb');
+//mongoose.connect('mongodb://localhost/userdb');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('Instructor', instructorSchema);
