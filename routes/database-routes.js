@@ -21,13 +21,27 @@ exports.findByCourseName = function(req, res) {
 
     let course = req.query.course;
 
+    let tag = req.query.tag;
+
     console.log(course);
 
-    Chat.find({ "course" : course }, function(err, allChats) {
-        if (err) throw err;
+    console.log(tag);
 
-        res.send(allChats);
-    });
+    if (tag == 'none'){
+
+	    Chat.find({ "course" : course }, function(err, allChats) {
+		if (err) throw err;
+
+		res.send(allChats);
+	    });
+    }
+    else{
+	    Chat.find({ "course" : course, "tag" : tag }, function(err, allChats) {
+		if (err) throw err;
+
+		res.send(allChats);
+	    });
+    }
 
 };
 

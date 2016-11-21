@@ -23,6 +23,7 @@ $(function() {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
   var instructor = false;
+  var tagfilter = 'none';
 
   var socket = io();
 
@@ -52,7 +53,54 @@ $(function() {
 
       // Tell the server your username
       socket.emit('add user', username);
+      //check if user is an instructor
+      $.get('/get_instructor', { username: username }, function(resp_data){
+		console.log(resp_data);
+		if (resp_data.length > 0){
+			instructor = true;
+		}
+		console.log("is instructor: "+instructor);
+		if (instructor){
+	   		createTagFilter();
+       		}	
+	});
     }
+  }
+
+  //creates a filter for tags (only instructors can see this)
+  function createTagFilter () {
+	let tags = ['none','no tag', 'question', 'suggestion'];
+        console.log("Instructor is true drop down entered");
+    	let parenttag = $('#tag-drop');
+	parenttag.append($('<h5>').text("Filter by Tag"));
+	let tmp = $('<select>');
+	tmp.attr('id', 'tagfil');
+	for (let i = 0; i < tags.length; i++){
+		let tmpopt = $('<option>').text(tags[i]);
+		tmpopt.attr('id', 'tagdrop'+i);
+		tmp.append(tmpopt);
+	}
+	parenttag.append(tmp);
+	$('#tagfil').change(function () {
+		console.log('drop change');
+		tagfilter = this.value.replace(/\s/, '');
+		console.log('tag filter: '+tagfilter);
+		clearMessages();
+		var message = "Welcome to " + room + "\'s Chat!";
+		log(message, {
+		  prepend: true
+		});
+		$.get('/get_messages', { course: room, tag: tagfilter }, function(resp_data){
+		  for(let x = 0; x < resp_data.length; x++){
+		    addChatMessage({
+		      username: resp_data[x]["username"],
+		      message: resp_data[x]["content"],
+		      tag: resp_data[x]["tag"]
+		    });
+		  }
+
+		});
+	});
   }
 
   // Sends a chat message
@@ -309,19 +357,11 @@ $(function() {
         room = children[x].innerText;
         socket.emit('join-room', room);
         clearMessages();
-        
         var message = "Welcome to " + room + "\'s Chat!";
         log(message, {
           prepend: true
         });
-        $.get('/get_instructor', { username: username }, function(resp_data){
-		console.log(resp_data);
-		if (resp_data.length > 0){
-			instructor = true;
-		}
-		console.log("is instructor: "+instructor)	
-	});
-        $.get('/get_messages', { course: room }, function(resp_data){
+        $.get('/get_messages', { course: room, tag: tagfilter }, function(resp_data){
           for(let x = 0; x < resp_data.length; x++){
             addChatMessage({
               username: resp_data[x]["username"],
