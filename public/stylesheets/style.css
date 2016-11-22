@@ -116,6 +116,10 @@ ul {
   text-align: center;
 }
 
+.profile.page {
+   display: none;
+}
+
 /* Messages */
 
 .chatArea {

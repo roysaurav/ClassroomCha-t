@@ -15,6 +15,7 @@ $(function() {
 
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
+  var $profilePage = $('.profile.page'); //The profile page
 
   // Prompt for setting a username
   var username;
@@ -39,7 +40,11 @@ $(function() {
     }
     log(message);
   }
-
+  //open profile page when button is clicked
+  function openProfile(){
+	$chatPage.hide();
+	$profilePage.show();
+  }
   // Sets the client's username
   function setUsername () {
     username = cleanInput($usernameInput.val().trim());
@@ -53,6 +58,15 @@ $(function() {
 
       // Tell the server your username
       socket.emit('add user', username);
+
+      //Create link to profile page
+      let profparent = $('#profilelink');
+      let tmp = $('<button>').text('Profile Page');
+      tmp.on('click', function () {
+	   openProfile();
+      });
+      profparent.append(tmp);
+
       //check if user is an instructor
       $.get('/get_instructor', { username: username }, function(resp_data){
 		console.log(resp_data);
@@ -353,6 +367,8 @@ $(function() {
     for(let x = 0; x < children.length; x++){
 
       $('#' + children[x].id).on('click', function(){
+	$profilePage.hide();
+	$chatPage.show();
         socket.emit('leave-room', room);
         room = children[x].innerText;
         socket.emit('join-room', room);
@@ -360,7 +376,7 @@ $(function() {
         var message = "Welcome to " + room + "\'s Chat!";
         log(message, {
           prepend: true
-        });
+        })
         $.get('/get_messages', { course: room, tag: tagfilter }, function(resp_data){
           for(let x = 0; x < resp_data.length; x++){
             addChatMessage({
@@ -379,7 +395,6 @@ $(function() {
   }
 
   addHandlers();
-
 
 
 
