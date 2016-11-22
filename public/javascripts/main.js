@@ -376,7 +376,7 @@ $(function() {
         var message = "Welcome to " + room + "\'s Chat!";
         log(message, {
           prepend: true
-        })
+        });
         $.get('/get_messages', { course: room, tag: tagfilter }, function(resp_data){
           for(let x = 0; x < resp_data.length; x++){
             addChatMessage({
