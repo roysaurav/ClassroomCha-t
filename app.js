@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var firebase = require("firebase");
 
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
@@ -33,21 +34,17 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chat);
 app.use('/profile', profile);
-app.use('/course', courses);
+app.use('/course', courses.router);
 app.use('/registration', registration);
 app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
 app.get('/get_instructor', db_funcs.findInstructor);
 
-// setting CORS to use Cobalt Api
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
 
-app.get('/courses', course.getCourses);
+app.get('/courses', courses.getCourses);
+
 // Chat room stuff
+
 
 var numUsers = 0;
 

@@ -1,11 +1,11 @@
 $(function(){
 
-    var response = $.ajax({
-        url: 'https://cobalt.qas.im/api/1.0/courses?key=A7IzHY2bIqalKTYlmnuok3LIYTPpUTWV&limit=10',
+    $.ajax({
+        url: '/courses',
         type: 'GET',
-        crossDomain: true
-    });
-
-    console.log(response);
+        success: function(data){
+            console.log(data);
+        }
+    })
 
 });
