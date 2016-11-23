@@ -39,6 +39,14 @@ app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
 app.get('/get_instructor', db_funcs.findInstructor);
 
+// setting CORS to use Cobalt Api
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.get('/courses', course.getCourses);
 // Chat room stuff
 
 var numUsers = 0;
