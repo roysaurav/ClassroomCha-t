@@ -8,9 +8,10 @@ var cobalt = new cobaltAPI({
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin','*');
-  res.render('course', { title: 'Express' });
+router.get('/', function(req, res) {
+  cobalt.get('/courses', {limit: 10}, function(err, req, resp){
+        res.send(resp);
+    });
 });
 
 var getCourses = function(){
@@ -18,9 +19,9 @@ var getCourses = function(){
     cobalt.get('/courses', {limit: 10}, function(err, req, res){
         console.log(res);
     });
-}
+};
 
 module.exports = {
     router: router,
     getCourses: getCourses
-}
+};
