@@ -8,6 +8,7 @@ var firebase = require("firebase");
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chat = require('./routes/chat');
+var courses = require('./routes/course');
 var profile = require('./routes/profile');
 var registration = require('./routes/registration');
 var db_funcs = require('./routes/database-routes');
@@ -32,6 +33,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chat);
 app.use('/profile', profile);
+app.use('/course', courses);
 app.use('/registration', registration);
 app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
@@ -48,7 +50,7 @@ var numUsers = 0;
  */
 
 io.sockets.on('connection', function (socket) {
- 
+
   var addedUser = false;
   let userRoom = '';
 
@@ -91,7 +93,7 @@ function newMessage(socket, data, room){
 }
 
 function addUser(socket, username, user, room){
- 
+
     if (user) return;
 
     // we store the username in the socket session for this client
@@ -110,7 +112,7 @@ function addUser(socket, username, user, room){
 }
 
 function disconnect(socket, user, room){
-  
+
     if (user) {
       --numUsers;
 
@@ -121,7 +123,7 @@ function disconnect(socket, user, room){
       });
     }
 
-}  
+}
 
 http.listen(3000, function(){
     console.log('listening on *:3000');
