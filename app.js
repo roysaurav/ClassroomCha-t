@@ -34,14 +34,14 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/chat', chat);
 app.use('/profile', profile);
-app.use('/course', courses.router);
+app.use('/course', courses);
 app.use('/registration', registration);
 app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
 app.get('/get_instructor', db_funcs.findInstructor);
 
 
-app.get('/courses', courses.getCourses);
+app.get('/courses/getcourses', courses);
 
 // Chat room stuff
 

@@ -9,19 +9,14 @@ var cobalt = new cobaltAPI({
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  cobalt.get('/courses', {limit: 10}, function(err, req, resp){
+  	res.render('course', { title: 'Express' });
+});
+
+/* GET home page. */
+router.get('/getcourses', function(req, res) {
+  	cobalt.get('/courses', {limit: 10}, function(err, req, resp){
         res.send(resp);
     });
 });
 
-var getCourses = function(){
-    var my_response;
-    cobalt.get('/courses', {limit: 10}, function(err, req, res){
-        console.log(res);
-    });
-};
-
-module.exports = {
-    router: router,
-    getCourses: getCourses
-};
+module.exports = router;
