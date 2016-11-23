@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title><%= title %></title>
   <link rel="stylesheet" href='/stylesheets/style.css'>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDyU0FZfhOFkr3DMf3FOgeZljCcdLd8nJg",
+    authDomain: "chat-48014.firebaseapp.com",
+    databaseURL: "https://chat-48014.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "501548739593"
+  };
+  firebase.initializeApp(config);
+</script>
 </head>
 <body>
 <input type="text" name="firstname" id="firstname">
