@@ -197,3 +197,21 @@ ul {
   width:10%;
 }
 
+@media screen and (max-width: 1000px) {
+
+  #class-list li, #left-col h5{
+    text-align: center;
+  }
+
+    #left-col {
+      float:none;
+      width:100%;
+    }
+
+    #right-col {
+      width:100%;
+      float:none;
+    }
+
+}
+
