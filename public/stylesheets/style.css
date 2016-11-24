@@ -36,6 +36,8 @@ html, body {
 ul {
   list-style: none;
   word-wrap: break-word;
+  text-decoration: none;
+  padding:0;
 }
 
 /* Pages */
@@ -155,12 +157,17 @@ ul {
   float:left;
   height: 40px;
   right: 0;
-  width:90%;
+  width:91%;
+  border-radius: 0;
+  height:inherit;
+  border: 1px solid black;
 }
 
 #left-col {
   width:20%;
   float:left;
+  height:100%;
+  background-color:#4D394B;
 }
 
 #right-col {
@@ -179,9 +186,8 @@ ul {
 }
 
 #chat-message-bar {
-  border: 10px solid #000;
   bottom: 0;
-  height: 60px;
+  height: 40px;
   left: 0;
   outline: none;
   padding-left: 10px;
@@ -190,27 +196,68 @@ ul {
   width: 100%;
 }
 
-#tag-select, #tag-icon {
+#tag-select  {
+  float:left;
+  margin-left:91%;
+  height:inherit;
+  width:9%;
+  border: 1px solid black;
+}
+
+#tag-icon {
+  border-radius: 0;
+  border: 1px solid black;
   float:left;
   margin-left:90%;
-  height:100%;
+  height:inherit;
   width:10%;
 }
 
-@media screen and (max-width: 1000px) {
+#left-col button, #left-col input {
+  border-radius: 0;
+  outline:none;
+  border: 1px solid black;
+}
 
-  #class-list li, #left-col h5{
-    text-align: center;
-  }
+#left-col select {
+  width: 75%;
+}
+
+#left-col li, #left-col h5 {
+  color:#F4F0EC;
+}
+
+#class-list li, #left-col h5, #profilelink, #tag-drop{
+  text-align: center;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+@media screen and (max-width: 1200px) {
 
     #left-col {
       float:none;
       width:100%;
+      height:auto;
     }
 
     #right-col {
       width:100%;
       float:none;
+    }
+
+    #tag-icon {
+      margin-left:70%;
+      width:30%;
+    }
+
+    .inputMessage {
+      width:71%;
     }
 
 }
