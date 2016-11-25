@@ -202,6 +202,7 @@ ul {
   height:inherit;
   width:9%;
   border: 1px solid black;
+  border-radius: 0px;
 }
 
 #tag-icon {
@@ -215,6 +216,8 @@ ul {
 
 #left-col button, #left-col input {
   border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   outline:none;
   border: 1px solid black;
 }
