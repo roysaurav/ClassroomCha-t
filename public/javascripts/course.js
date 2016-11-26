@@ -1,11 +1,21 @@
 $(function(){
-
+    var courseNames = [];
     $.ajax({
-        url: '/courses/getcourses',
-        type: 'GET',
-        success: function(data){
-            console.log(data);
-        }
+            url: '/course/getCourses',
+            type: 'GET',
+            success: function(data){
+                courseNames = data.map(function(data){
+                    return data.name;
+                });
+            }
     });
+
+    $("body").autoComplete({
+        source: courseNames,
+        appendTo: '#autoSearchResults'
+    });
+
+
+
 
 });

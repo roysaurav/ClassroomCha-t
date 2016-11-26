@@ -5,11 +5,21 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <p>Course Name: <input type="text" name="courseSearch"/></p>
+    <p>Course Name: <input id="courseSearch" type="text" name="courseSearch"/></p>
+    <div id="autoSearchResults"></div>
   </body>
-  <script
+
+
+<script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
-  <script src="/javascripts/course.js"></script>
+<script
+  src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
+  integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
+  crossorigin="anonymous"></script>
+
+
+
+  <script src="/javascripts/course.js" defer='defer'></script>
 </html>

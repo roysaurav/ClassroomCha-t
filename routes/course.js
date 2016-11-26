@@ -12,11 +12,13 @@ router.get('/', function(req, res) {
   	res.render('course', { title: 'Express' });
 });
 
+var data;
 /* GET home page. */
 router.get('/getcourses', function(req, res) {
-  	cobalt.get('/courses', {limit: 10}, function(err, req, resp){
-        res.send(resp);
+  	cobalt.get('/courses', {limit: 10}, function(err, resp){
+        res.json(resp);
     });
+
 });
 
 module.exports = router;
