@@ -39,6 +39,7 @@ app.use('/registration', registration);
 app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
 app.get('/get_instructor', db_funcs.findInstructor);
+app.get('/get_student', db_funcs.findStudent);
 
 
 app.get('/courses/getcourses', courses);

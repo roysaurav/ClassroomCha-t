@@ -1,0 +1,35 @@
+[
+    {
+        "username": "User1",
+        "password": "test1",
+        "email": "user1@test.com",
+	"studentnum": 123456789,
+	"courses": ["CSC301","CSC309","CSC324"],
+	"givenname": "Firstname",
+	"lastname": "Lastname",
+	"year": 4,
+	"status": "Undergrad"
+    },
+    {
+        "username": "User2",
+        "password": "test2",
+        "email": "user2@test.com",
+	"studentnum": 9999888777,
+	"courses": ["CSC384"],
+	"givenname": "Firstname",
+	"lastname": "Lastname",
+	"year": 2,
+	"status": "PhD"
+    },
+    {
+        "username": "User3",
+        "password": "test3",
+        "email": "user3@test.com",
+	"studentnum": 850193473,
+	"courses": ["CSC301","CSC309","CSC324","CSC384"],
+	"givenname": "Awesome",
+	"lastname": "McAwesomeson",
+	"year": 3,
+	"status": "MsC"
+    }
+]

@@ -1,5 +1,7 @@
 var Chat = require('../models/message');
 var Instr = require('../models/instructor');
+var Stu = require('../models/student');
+var Admin = require('../models/admin');
 
 /**
  * Finds the past messages from chats.
@@ -14,6 +16,16 @@ exports.findInstructor = function(req, res){
 	if (err) throw err;
 	console.log("response:"+instructor);
 	res.send(instructor);
+    });
+};
+
+exports.findStudent = function(req, res){
+    let user = req.query.username;
+    console.log(user);
+    Stu.find({ "username" : user }, function(err, student){
+	if (err) throw err;
+	console.log("student:"+student);
+	res.send(student);
     });
 };
 

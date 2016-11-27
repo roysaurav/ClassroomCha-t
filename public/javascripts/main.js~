@@ -24,8 +24,6 @@ $(function() {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
   var instructor = false;
-  var student = false;
-  var admin = false;
   var tagfilter = 'none';
 
   var socket = io();
@@ -78,31 +76,9 @@ $(function() {
 		console.log("is instructor: "+instructor);
 		if (instructor){
 	   		createTagFilter();
-			createCourseList(resp_data[0], admin);
-			addHandlers();
-       		}	
-	});
-       $.get('/get_student', { username: username }, function(resp_data){
-		console.log(resp_data);
-		if (resp_data.length > 0){
-			student = true;
-		}
-		console.log("is student: "+instructor);
-		if (student){
-			createCourseList(resp_data[0], admin);
-			addHandlers();
        		}	
 	});
     }
-  }
-  function createCourseList(user, admin){
-	let usercourses = user.courses
-	let courseparent = $('#class-list');
-	for (let i = 0; i < usercourses.length; i++){
-		let tmp = $('<li>').text(usercourses[i]);
-		tmp.attr('id', usercourses[i]);
-		courseparent.append(tmp);
-        }
   }
 
   //creates a filter for tags (only instructors can see this)
@@ -400,7 +376,7 @@ $(function() {
         var message = "Welcome to " + room + "\'s Chat!";
         log(message, {
           prepend: true
-        });
+        })
         $.get('/get_messages', { course: room, tag: tagfilter }, function(resp_data){
           for(let x = 0; x < resp_data.length; x++){
             addChatMessage({
@@ -417,6 +393,8 @@ $(function() {
     }
 
   }
+
+  addHandlers();
 
 
 
