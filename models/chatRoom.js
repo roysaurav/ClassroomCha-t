@@ -38,7 +38,7 @@ var chatRoomSchema = new Schema(
 )
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
-mongoose.connect('mongodb://localhost/chatroomdb');
+//mongoose.connect('mongodb://localhost/chatroomdb');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('ChatRoom', chatRoomSchema);
