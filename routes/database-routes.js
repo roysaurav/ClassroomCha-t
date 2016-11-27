@@ -68,7 +68,6 @@ exports.findByCourseName = function(req, res) {
 
 };
 
-
 /**
  * Adds the messages from chat.
  *
