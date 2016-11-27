@@ -123,10 +123,11 @@ $(function() {
 		tmpbut.attr('type', 'submit');
 		tmpbut.attr('value', 'Remove');
 		tmpbut.attr('id', 'button'+courses[i]);
+		let coursename = courses[i];
 		tmpbut.on('click', function (){
-			let rmelement = document.getElementById("profilediv"+courses[i]);
+			let rmelement = document.getElementById("profilediv"+coursename);
 			rmelement.innerHTML = '';
-			courses.splice(courses.indexOf(courses[i]),1);
+			courses.splice(courses.indexOf(coursename),1);
 			//console.log(courses);
 			//console.log(rmelement);
 			//console.log(user.courses);
@@ -156,7 +157,7 @@ $(function() {
 			tmpbut.on('click', function (){
 				let rmelement = document.getElementById("profilediv"+usercoursetoadd);
 				rmelement.innerHTML = '';
-				courses.push(courses.indexOf(usercoursetoadd),1);
+				courses.push(usercoursetoadd);
 				//console.log(courses);
 				//console.log(rmelement);
 				//console.log(user.courses);
