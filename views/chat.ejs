@@ -52,17 +52,20 @@
 			</li>
 			<li class="profile page">
 			  <div class="form">
-				<h3 id="titleuser">Update your username</h3>
-				<input  id="usernameInput" class="usernameInput" type="text" maxlength="14" />
-				       <h3 id="titleemail">Update your email</h3>
+				<h3 id="titleuser">Username:</h3>
+				<div id="usernamedisplay">
+				</div>
+				<h3 id="titleemail">Update your email</h3>
 				<input id="emailInput" type="text" />
 				<h3 id="titleaddcourse">Add Courses (Enter how many courses you want to add)</h3>
-				<input id="addinput" type="text" />
-				<button id="addinputbutton" type="button">Submit</button>
+				<input id="addcourse" type="text" />
+				<button id="addcoursebutton" type="button">Submit</button>
 				<h3 id="titleremovecourses">Remove Courses</h3>
-				<ul>
-				</ul>
-				<button id="save" type="button">Save</button>
+				<div id="usercoursesdisplay">
+				</div>
+				<form id="saveinfo" method="post">
+					<button id="save" type="button">Save</button>
+				</form>
 			      </div>
 			</li>
 		</ul>

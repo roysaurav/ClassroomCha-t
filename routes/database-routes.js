@@ -29,6 +29,17 @@ exports.findStudent = function(req, res){
     });
 };
 
+exports.updateStudent = function(req, res){
+    let user = req.body.username;
+    console.log(user);
+    Stu.findOneAndUpdate({ "username" : user},req.body, {new: true}, function(err, student){
+	if (err) throw err;
+	console.log("Student Saved");
+	console.log(student);
+	res.send(student);
+    });
+};
+
 exports.findByCourseName = function(req, res) {
 
     let course = req.query.course;

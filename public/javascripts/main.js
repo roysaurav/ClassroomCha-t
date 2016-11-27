@@ -61,14 +61,6 @@ $(function() {
       // Tell the server your username
       socket.emit('add user', username);
 
-      //Create link to profile page
-      let profparent = $('#profilelink');
-      let tmp = $('<button>').text('Profile Page');
-      tmp.on('click', function () {
-	   openProfile();
-      });
-      profparent.append(tmp);
-
       //check if user is an instructor
       $.get('/get_instructor', { username: username }, function(resp_data){
 		console.log(resp_data);
@@ -78,8 +70,7 @@ $(function() {
 		console.log("is instructor: "+instructor);
 		if (instructor){
 	   		createTagFilter();
-			createCourseList(resp_data[0], admin);
-			addHandlers();
+			userSetUp(resp_data[0]);
        		}	
 	});
        $.get('/get_student', { username: username }, function(resp_data){
@@ -89,15 +80,110 @@ $(function() {
 		}
 		console.log("is student: "+instructor);
 		if (student){
-			createCourseList(resp_data[0], admin);
-			addHandlers();
+			userSetUp(resp_data[0]);
        		}	
 	});
     }
   }
-  function createCourseList(user, admin){
+  function userSetUp(user){
+      	let profparent = $('#profilelink');
+	let profilebuttonclear = document.getElementById('profilelink');
+	profilebuttonclear.innerHTML = '';
+      	let tmp = $('<button>').text('Profile Page');
+      	tmp.on('click', function () {
+	   openProfile();
+	   profilePage(user);
+      	});
+      	profparent.append(tmp);
+      	createCourseList(user);
+      	addHandlers();
+  }
+
+  function profilePage(user){
+	let username = user.username;
+        let userparent = $('#usernamedisplay');
+	let userclear = document.getElementById("usernamedisplay");
+	userclear.innerHTML = '';
+        let tmp = $('<h4>').text(username);
+	userparent.append(tmp);
+	let courses = user.courses.slice(0);
+	console.log(user.courses);
+	userparent = $('#usercoursesdisplay');
+	userclear = document.getElementById("usercoursesdisplay");
+	userclear.innerHTML = '';
+	for (let i = 0; i < courses.length; i++){
+		let tmp = $('<div>')
+		tmp.attr('id', 'profilediv'+courses[i]);
+		let tmplab = $('<label>').text(courses[i] + "  ");
+		tmplab.attr('for', 'button'+courses[i]);
+		tmplab.attr('value', courses[i]);
+		tmplab.attr('id', 'label'+courses[i]);
+		tmp.append(tmplab)
+		let tmpbut = $('<input>');
+		tmpbut.attr('type', 'submit');
+		tmpbut.attr('value', 'Remove');
+		tmpbut.attr('id', 'button'+courses[i]);
+		tmpbut.on('click', function (){
+			let rmelement = document.getElementById("profilediv"+courses[i]);
+			rmelement.innerHTML = '';
+			courses.splice(courses.indexOf(courses[i]),1);
+			//console.log(courses);
+			//console.log(rmelement);
+			//console.log(user.courses);
+		});
+		tmp.append(tmpbut);
+		userparent.append(tmp);
+	}
+	let usercoursetoaddbutton = $('#addcoursebutton');
+	usercoursetoaddbutton.on('click', function(){
+		let usercoursetoadd = $('#addcourse').val();
+		console.log(usercoursetoadd);
+		if (!(courses.indexOf(usercoursetoadd) > -1) && usercoursetoadd != ""){
+			let tmp = $('<div>')
+			tmp.attr('id', 'profilediv'+usercoursetoadd);
+			let tmplab = $('<label>').text(usercoursetoadd + "  ");
+			tmplab.attr('for', 'button'+usercoursetoadd);
+			tmplab.attr('value', usercoursetoadd);
+			tmplab.attr('id', 'label'+usercoursetoadd);
+			tmp.append(tmplab)
+			let tmpbut = $('<input>');
+			tmpbut.attr('type', 'submit');
+			tmpbut.attr('value', 'Remove');
+			tmpbut.attr('id', 'button'+usercoursetoadd);
+			courses.push(usercoursetoadd);
+			console.log(courses);
+			console.log(user.courses);
+			tmpbut.on('click', function (){
+				let rmelement = document.getElementById("profilediv"+usercoursetoadd);
+				rmelement.innerHTML = '';
+				courses.push(courses.indexOf(usercoursetoadd),1);
+				//console.log(courses);
+				//console.log(rmelement);
+				//console.log(user.courses);
+			});
+			tmp.append(tmpbut);
+			userparent.append(tmp);
+		}
+		document.getElementById("addcourse").value = "";
+	});
+	$("#save").on('click', function(){
+		console.log(courses);
+		console.log(user.courses);
+		console.log(username);
+		if (student){
+			$.post('/update_student', { username: username, password: user.password,  email: user.email, studentnum: user.studentnum, courses: courses, givenname: user.givenname, lastname: user.lastname, year: user.year, status: user.status}, function(resp_data){
+				console.log(resp_data);
+				userSetUp(resp_data);
+			});
+		}
+	});
+  }
+
+  function createCourseList(user){
 	let usercourses = user.courses
 	let courseparent = $('#class-list');
+	let courseclear = document.getElementById('class-list');
+	courseclear.innerHTML = '';
 	for (let i = 0; i < usercourses.length; i++){
 		let tmp = $('<li>').text(usercourses[i]);
 		tmp.attr('id', usercourses[i]);
