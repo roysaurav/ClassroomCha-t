@@ -56,7 +56,7 @@ $(function(){
             });
         },
         open: function(event, ui){
-            $('.ui-menu-item').hover(function(){
+            $('.ui-menu-item').click(function(){
                 $('#additionalInfo').empty();
                 var whichCourse = $(this).find('.ui-menu-item-wrapper').text();
                 $.ajax({
@@ -76,7 +76,10 @@ $(function(){
                                     endTime = hhmmss(time.end);
                                 });
                                 $('#additionalInfo').append('<div class="sectionInfo">'+section.code+' - '+day+' '+startTime+':'+endTime+'</div>');
-                                addCourse({course: whichCourse, section:section.code});
+                                 $('.sectionInfo').click(function(){
+                                    $('#myCourseSection').append('<div>'+whichCourse+' '+section.code+'</div>');
+                                });
+                                //addCourse({course: whichCourse, section:section.code});
                             }
                         });
 
@@ -84,13 +87,8 @@ $(function(){
 
                 }
                  });
-            }, function(){
-
             });
         },
-        close : function(){
-            $('#additionalInfo').empty();
-        }
     });
 
 
