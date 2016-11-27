@@ -157,7 +157,7 @@ $(function() {
 			tmpbut.on('click', function (){
 				let rmelement = document.getElementById("profilediv"+usercoursetoadd);
 				rmelement.innerHTML = '';
-				courses.push(usercoursetoadd);
+				courses.splice(courses.indexOf(usercoursetoadd),1);
 				//console.log(courses);
 				//console.log(rmelement);
 				//console.log(user.courses);
