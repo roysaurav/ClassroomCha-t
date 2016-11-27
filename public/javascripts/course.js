@@ -15,7 +15,7 @@ $(function(){
     }
     function addCourse(info){
         $('.sectionInfo').click(function(){
-            $('#myCourseSection').append('<div>'+info.course+' '+info.section'</div>');
+            $('#myCourseSection').append('<div>'+info.course+' '+info.section+'</div>');
         });
     }
     $('#addCourseButton').click(function(){
