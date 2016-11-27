@@ -79,7 +79,7 @@ $(function(){
                 }
                  });
             }, function(){
-                $('#additionalInfo').empty();
+
             });
         },
         close : function(){
