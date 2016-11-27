@@ -13,6 +13,11 @@ $(function(){
 
         return pad(hours)+":"+pad(minutes)+":"+pad(secs);
     }
+    function addCourse(info){
+        $('.sectionInfo').click(function(){
+            $('#myCourseSection').append('<div>'+info.course+' '+info.section'</div>');
+        });
+    }
     $('#addCourseButton').click(function(){
          $.ajax({
                 url: "/course/getCourses?search='"+$("[name='courseSearch']").val()+"'",
@@ -71,6 +76,7 @@ $(function(){
                                     endTime = hhmmss(time.end);
                                 });
                                 $('#additionalInfo').append('<div class="sectionInfo">'+section.code+' - '+day+' '+startTime+':'+endTime+'</div>');
+                                addCourse({course: whichCourse, section:section.code});
                             }
                         });
 
