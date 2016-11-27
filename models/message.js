@@ -33,7 +33,7 @@ var messageSchema = new Schema(
 )
 
 // Doc for Mongoose Connections: http://mongoosejs.com/docs/connections
-mongoose.connect('mongodb://localhost/messagesdb');
+mongoose.connect('mongodb://heroku_q17zj5pm:b61ghjhsqsj8mnr87qmcqons3g@ds111718.mlab.com:11718/heroku_q17zj5pm');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('Message', messageSchema);
