@@ -1,5 +1,18 @@
 $(function(){
+    // got this code snippet from
+    // http://stackoverflow.com/questions/31337370/how-to-convert-seconds-to-hhmmss-in-moment-js
+    // responsible for converting secdonds to nice hh: mm : ss format
+    function pad(num) {
+        return ("0"+num).slice(-2);
+    }
+    function hhmmss(secs) {
+        var minutes = Math.floor(secs / 60);
+        secs = secs%60;
+        var hours = Math.floor(minutes/60)
+        minutes = minutes%60;
 
+        return pad(hours)+":"+pad(minutes)+":"+pad(secs);
+    }
     $('#addCourseButton').click(function(){
          $.ajax({
                 url: "/course/getCourses?search='"+$("[name='courseSearch']").val()+"'",
@@ -46,8 +59,19 @@ $(function(){
                 type: 'GET',
                 success: function(data){
                     data.forEach(function(sections){
+
                         sections['meeting_sections'].forEach(function(section){
-                            $('#additionalInfo').append('<div>'+section.code+'</div>');
+                            if (section.code.substring(0,1)==='L'){
+                                let day;
+                                let startTime;
+                                let endTime;
+                                section.times.forEach(function(time){
+                                    day = time.day;
+                                    startTime = hhmmss(time.start);
+                                    endTime = hhmmss(time.end);
+                                });
+                                $('#additionalInfo').append('<div class="sectionInfo">'+section.code+' - '+day+' '+startTime+':'+endTime+'</div>');
+                            }
                         });
 
                     })
