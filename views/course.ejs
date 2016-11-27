@@ -3,10 +3,17 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
   </head>
   <body>
-    <p>Course Name: <input id="courseSearch" type="text" name="courseSearch"/></p>
-    <div id="autoSearchResults"></div>
+    <div class="ui-widget">
+      <label for="courseSearch"> Course Name: </label>
+      <input type="text" name="courseSearch"/>
+      <button id="addCourseButton">+</button>
+    </div>
+    <div id="additionalInfo"></div>
+    <div id="myCourseSection"><p>My courses</p></div>
   </body>
 
 
@@ -18,7 +25,6 @@
   src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"
   integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E="
   crossorigin="anonymous"></script>
-
 
 
   <script src="/javascripts/course.js" defer='defer'></script>

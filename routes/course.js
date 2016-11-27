@@ -15,7 +15,8 @@ router.get('/', function(req, res) {
 var data;
 /* GET home page. */
 router.get('/getcourses', function(req, res) {
-  	cobalt.get('/courses', {limit: 10}, function(err, resp){
+
+  	cobalt.get('/courses', {q: req.query.search}, function(err, resp){
         res.json(resp);
     });
 
