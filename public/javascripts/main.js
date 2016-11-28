@@ -10,6 +10,7 @@ $(function() {
   // Initialize variables
   var $window = $(window);
   var $usernameInput = $('.usernameInput'); // Input for username
+  var $passwordInput = $('.passwordInput'); // Input for password
   var $messages = $('.messages'); // Messages area
   var $inputMessage = $('.inputMessage'); // Input message input box
 
@@ -22,14 +23,14 @@ $(function() {
   var connected = false;
   var typing = false;
   var lastTypingTime;
-  var $currentInput = $usernameInput.focus();
+  var $currentInput;
   var instructor = false;
   var student = false;
   var admin = false;
   var tagfilter = 'none';
-
+  var password;
   var socket = io();
-
+  var valid = false;
   let room = '';
 
 
@@ -50,39 +51,29 @@ $(function() {
   // Sets the client's username
   function setUsername () {
     username = cleanInput($usernameInput.val().trim());
+    password = cleanInput($passwordInput.val().trim());
+    console.log(username);
+    console.log(password);
+    if (username){
+            // If the username exits
+	    $.get('/get_student', { username: username }, function(resp_data){
+			console.log(resp_data);
+			if (resp_data.length > 0 && password == resp_data[0].password){
+				valid = true;
+				$loginPage.fadeOut();
+				$chatPage.show();
+				$loginPage.off('click');
+				//$currentInput = $inputMessage.focus();
 
-    // If the username is valid
-    if (username) {
-      $loginPage.fadeOut();
-      $chatPage.show();
-      $loginPage.off('click');
-      $currentInput = $inputMessage.focus();
-
-      // Tell the server your username
-      socket.emit('add user', username);
-
-      //check if user is an instructor
-      $.get('/get_instructor', { username: username }, function(resp_data){
-		console.log(resp_data);
-		if (resp_data.length > 0){
-			instructor = true;
-		}
-		console.log("is instructor: "+instructor);
-		if (instructor){
-	   		createTagFilter();
-			userSetUp(resp_data[0]);
-       		}	
-	});
-       $.get('/get_student', { username: username }, function(resp_data){
-		console.log(resp_data);
-		if (resp_data.length > 0){
-			student = true;
-		}
-		console.log("is student: "+instructor);
-		if (student){
-			userSetUp(resp_data[0]);
-       		}	
-	});
+				// Tell the server your username
+				socket.emit('add user', username);
+				userSetUp(resp_data[0]);
+				//check if user is an instructor
+			}
+			else{
+				valid = false;
+	       		}	
+		});
     }
   }
   function userSetUp(user){
@@ -128,7 +119,7 @@ $(function() {
 			let rmelement = document.getElementById("profilediv"+coursename);
 			rmelement.innerHTML = '';
 			courses.splice(courses.indexOf(coursename),1);
-			//console.log(courses);
+			console.log(courses);
 			//console.log(rmelement);
 			//console.log(user.courses);
 		});
@@ -139,6 +130,7 @@ $(function() {
 	usercoursetoaddbutton.on('click', function(){
 		let usercoursetoadd = $('#addcourse').val();
 		console.log(usercoursetoadd);
+		console.log(courses.indexOf(usercoursetoadd));
 		if (!(courses.indexOf(usercoursetoadd) > -1) && usercoursetoadd != ""){
 			let tmp = $('<div>')
 			tmp.attr('id', 'profilediv'+usercoursetoadd);
@@ -171,12 +163,10 @@ $(function() {
 		console.log(courses);
 		console.log(user.courses);
 		console.log(username);
-		if (student){
-			$.post('/update_student', { username: username, password: user.password,  email: user.email, studentnum: user.studentnum, courses: courses, givenname: user.givenname, lastname: user.lastname, year: user.year, status: user.status}, function(resp_data){
+		$.post('/update_student', { username: username, password: user.password,  email: user.email, studentnum: user.studentnum, courses: courses, givenname: user.givenname, lastname: user.lastname, year: user.year, status: user.status}, function(resp_data){
 				console.log(resp_data);
 				userSetUp(resp_data);
-			});
-		}
+		});
 	});
   }
 
@@ -398,12 +388,12 @@ $(function() {
 
   $window.keydown(function (event) {
     // Auto-focus the current input when a key is typed
-    if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-      $currentInput.focus();
-    }
+    //if (!(event.ctrlKey || event.metaKey || event.altKey)) {
+      //$currentInput.focus();
+    //}
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
-      if (username) {
+      if (valid) {
         sendMessage();
         socket.emit('stop typing');
         typing = false;
@@ -423,9 +413,9 @@ $(function() {
   // Click events
 
   // Focus input when clicking anywhere on login page
-  $loginPage.click(function () {
-    $currentInput.focus();
-  });
+  //$loginPage.click(function () {
+    //$currentInput.focus();
+  //});
 
   // Focus input when clicking on the message input's border
   $inputMessage.click(function () {
