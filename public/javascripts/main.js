@@ -34,48 +34,45 @@ $(function() {
   let room = '';
 
 
-  function addParticipantsMessage (data) {
+  function addParticipantsMessage(data) {
     var message = '';
     if (data.numUsers === 1) {
-      message += "there's 1 participant";
+        message += "there's 1 participant";
     } else {
-      message += "there are " + data.numUsers + " participants";
+        message += "there are " + data.numUsers + " participants";
     }
     log(message);
   }
   //open profile page when button is clicked
-  function openProfile(){
-	$chatPage.hide();
-	$profilePage.show();
+  function openProfile() {
+      $chatPage.hide();
+      $profilePage.show();
   }
-  // Sets the client's username
-  function setUsername () {
-    username = cleanInput($usernameInput.val().trim());
-    password = cleanInput($passwordInput.val().trim());
-    console.log(username);
-    console.log(password);
-    if (username){
-            // If the username exits
-	    $.get('/get_student', { username: username }, function(resp_data){
-			console.log(resp_data);
-			if (resp_data.length > 0 && password == resp_data[0].password){
-				valid = true;
-				$loginPage.fadeOut();
-				$chatPage.show();
-				$loginPage.off('click');
-				//$currentInput = $inputMessage.focus();
 
-				// Tell the server your username
-				socket.emit('add user', username);
-				userSetUp(resp_data[0]);
-				//check if user is an instructor
-			}
-			else{
-				valid = false;
-	       		}	
-		});
-    }
-  }
+  $('#register').submit(function(event){
+
+      $.post('/register', $(this).serialize(), function(resp){
+        if(typeof resp != "string"){
+          username = cleanInput($('#username').val().trim());
+          valid = true;
+          $loginPage.fadeOut();
+          $chatPage.show();
+          $loginPage.off('click');
+
+          socket.emit('add user', username);
+          userSetUp(resp);
+
+        }else{
+          valid = false;
+          alert("Registration failed");
+        }
+      });
+
+        event.preventDefault();
+        return false;
+        
+  });
+
   function userSetUp(user){
       	let profparent = $('#profilelink');
 	let profilebuttonclear = document.getElementById('profilelink');
@@ -399,8 +396,28 @@ $(function() {
         typing = false;
       } else {
 
-        //This is called when the username is setup
-        setUsername();
+        $.post('/validateUser', $("#login-form").serialize(), function(resp_data) {
+        
+          if(typeof resp_data === "string"){
+            alert(resp_data);
+            valid = false;
+          }else{
+            console.log(resp_data);
+            username = cleanInput(resp_data[0].username.trim());
+            valid = true;
+            $loginPage.fadeOut();
+            $chatPage.show();
+            $loginPage.off('click');
+            //$currentInput = $inputMessage.focus();
+
+            // Tell the server your username
+            socket.emit('add user', username);
+            userSetUp(resp_data[0]);
+            //check if user is an instructor
+
+          }
+
+       });
 
       }
     }

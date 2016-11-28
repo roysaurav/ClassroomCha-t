@@ -114,10 +114,32 @@ exports.registerUser = function(req, res){
                 throw err;
             }
 
-            res.send('User added');
+            res.send(newUser);
         });
 
     
+    
+    });
+
+};
+
+
+exports.validateUser = function(req, res){
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    Stu.find({ "username" : username }, function(err, student){
+        console.log(student);
+        if(student.length === 0){
+            res.send("No user found with that username");
+        }
+
+        if(bcrypt.compareSync(password, student[0].password)){
+            res.send(student);
+        }else{
+            res.send("Incorrect password");
+        }
     
     });
 
