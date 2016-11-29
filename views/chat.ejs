@@ -106,6 +106,41 @@
 				</form>
 			      </div>
 			</li>
+
+			<li class="admin page">
+			  <div class="form">
+				<h3 id="titleadmin">Admin Page</h3>
+				<h2 id="adminmessage"></h2>
+				<table style="width:100%" id="userlistdisplay">
+        
+    				</table>
+				<form id="getstudentinfouser" method="post">
+					<h3 id="getusertitle">Find User by username</h3>
+					<input id="getusernameinput" type="text" />
+					<button id="getinfobyuser" type="button">Find User</button>
+				</form>
+				<form id="getstudentinfonum" method="post">
+					<h3 id="getuserbynumtitle">Find User by student number</h3>
+					<input id="getusernuminput" type="number" />
+					<button id="getinfobynum" type="button">Find User</button>
+				</form>
+				<form id="changeuserprivilege" method="post">
+					<h3 id="changeroletitle">Change User role (type in username of user to change)</h3>
+					<input id="changeroleusername" type="text" />
+					<select id="userroledrop">
+				  		<option value="student">Student</option>
+				  		<option value="instructor">Instructor</option>
+				  		<option value="admin">Admin</option>
+					</select>
+					<button id="changerolesave" type="button">Save</button>
+				</form>
+				<form id="deleteuser" method="post">
+					<h3 id="deleteusertitle">Delete User by username</h3>
+					<input id="deleteusernameinput" type="text" />
+					<button id="deleteuserbyuser" type="button">Delete User</button>
+				</form>
+			  </div>
+			</li>
 		</ul>
 
 	</div>

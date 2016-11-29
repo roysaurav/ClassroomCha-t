@@ -122,6 +122,10 @@ ul {
    display: none;
 }
 
+.admin.page {
+   display: none;
+}
+
 /* Messages */
 
 .chatArea {
@@ -230,7 +234,7 @@ ul {
   color:#F4F0EC;
 }
 
-#class-list li, #left-col h5, #profilelink, #tag-drop{
+#class-list li, #left-col h5, #profilelink, #tag-drop, #adminlink{
   text-align: center;
 }
 

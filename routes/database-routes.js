@@ -14,12 +14,23 @@ var bcrypt = require("bcrypt-nodejs");
 
 exports.findStudent = function(req, res){
     let user = req.query.username;
+    let stunum = req.query.studentnumber;
     console.log(user);
-    Stu.find({ "username" : user }, function(err, student){
-	if (err) throw err;
-	console.log("student:"+student);
-	res.send(student);
-    });
+    console.log(stunum);
+    if(user){
+	    Stu.find({ "username" : user }, function(err, student){
+		if (err) throw err;
+		console.log("student:"+student);
+		res.send(student);
+	    });
+    }
+    else if(stunum){
+	    Stu.find({ "studentnum" : stunum }, function(err, student){
+		if (err) throw err;
+		console.log("student:"+student);
+		res.send(student);
+	    });
+    }
 };
 
 exports.updateStudent = function(req, res){

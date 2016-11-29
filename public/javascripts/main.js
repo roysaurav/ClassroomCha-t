@@ -17,6 +17,7 @@ $(function() {
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
   var $profilePage = $('.profile.page'); //The profile page
+  var $adminPage = $('.admin.page');
 
   // Prompt for setting a username
   var username;
@@ -46,8 +47,8 @@ $(function() {
   //open profile page when button is clicked
   function openProfile() {
       $chatPage.hide();
+      $adminPage.hide();
       $profilePage.show();
-      document.getElementById("profilemessage").innerText = "";
   }
 
   $('#register').submit(function(event){
@@ -74,6 +75,61 @@ $(function() {
         return false;
         
   });
+  function adminTable(data){
+	document.getElementById("userlistdisplay").innerHTML = "";
+	let tableparent = $('#userlistdisplay');
+	let tmp = $('<tr>');
+	tmp.append($('<th>').text('Username'));
+	tmp.append($('<th>').text('Student Number'));
+	tmp.append($('<th>').text('Given Name'));
+	tmp.append($('<th>').text('Family Name'));
+	tmp.append($('<th>').text('Status'));
+	tmp.append($('<th>').text('Year'));
+	tmp.append($('<th>').text('Role'));
+	tableparent.append(tmp);
+	for (let i = 0; i < data.length; i++){
+		tmp = $('<tr>');
+		tmp.append($('<td>').text(data[i].username));
+		tmp.append($('<td>').text(data[i].studentnum));
+		tmp.append($('<td>').text(data[i].givenname));
+		tmp.append($('<td>').text(data[i].lastname));
+		tmp.append($('<td>').text(data[i].status));
+		tmp.append($('<td>').text(data[i].year));
+		tmp.append($('<td>').text(data[i].role));
+		tableparent.append(tmp);
+	}
+  }
+
+  function adminSetUp(){
+	let adminparent = $('#adminlink');
+	let adminbuttonclear = document.getElementById('adminlink');
+	adminbuttonclear.innerHTML = '';
+	let tmp = $('<button>').text('Admin Page');
+	tmp.on('click', function (){
+		$chatPage.hide();
+		$profilePage.hide();
+		$adminPage.show();
+	});
+	adminparent.append(tmp);
+	adminFunction();
+  }
+
+  function adminFunction(){
+	$("#getinfobyuser").on('click', function(){
+		let username = document.getElementById("getusernameinput").value;
+		 $.get('/get_student', { username: username }, function(resp_data){
+				console.log(resp_data);
+				adminTable(resp_data);
+			});
+	});
+	$("#getinfobynum").on('click', function(){
+		let stunum = document.getElementById("getusernuminput").value;
+		 $.get('/get_student', { studentnumber: stunum }, function(resp_data){
+				console.log(resp_data);
+				adminTable(resp_data);
+			});
+	});
+  }
 
   function userSetUp(user){
       	let profparent = $('#profilelink');
@@ -129,6 +185,7 @@ $(function() {
 		statusparent.append(tmp);
   }
   function profilePage(user){
+	document.getElementById("profilemessage").innerText = "";
 	let username = user.username;
         let userparent = $('#usernamedisplay');
 	let userclear = document.getElementById("usernamedisplay");
@@ -507,7 +564,12 @@ $(function() {
             //$currentInput = $inputMessage.focus();
             // Tell the server your username
             socket.emit('add user', username);
-            if (resp_data[0].role == "instructor"){
+	    if(resp_data[0].role == "admin"){
+			admin = true;
+			adminSetUp();
+			createTagFilter();
+	    }
+            else if (resp_data[0].role == "instructor"){
 			instructor = true;
 			createTagFilter();
 	    }
@@ -588,6 +650,7 @@ $(function() {
 
       $('#' + children[x].id).on('click', function(){
 	$profilePage.hide();
+	$adminPage.hide();
 	$chatPage.show();
         socket.emit('leave-room', room);
         room = children[x].innerText;
