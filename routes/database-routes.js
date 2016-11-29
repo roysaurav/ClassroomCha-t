@@ -1,7 +1,7 @@
 var Chat = require('../models/message');
-var Instr = require('../models/instructor');
+//var Instr = require('../models/instructor');
 var Stu = require('../models/student');
-var Admin = require('../models/admin');
+//var Admin = require('../models/admin');
 
 var bcrypt = require("bcrypt-nodejs");
 
@@ -11,24 +11,26 @@ var bcrypt = require("bcrypt-nodejs");
  * @param {object} req request object
  * @param {object} res response object
  */
-exports.findInstructor = function(req, res){
-    let user = req.query.username;
-    console.log(user);
-    Instr.find({ "username" : user }, function(err, instructor){
-	if (err) throw err;
-	console.log("response:"+instructor);
-	res.send(instructor);
-    });
-};
 
 exports.findStudent = function(req, res){
     let user = req.query.username;
+    let stunum = req.query.studentnumber;
     console.log(user);
-    Stu.find({ "username" : user }, function(err, student){
-	if (err) throw err;
-	console.log("student:"+student);
-	res.send(student);
-    });
+    console.log(stunum);
+    if(user){
+	    Stu.find({ "username" : user }, function(err, student){
+		if (err) throw err;
+		console.log("student:"+student);
+		res.send(student);
+	    });
+    }
+    else if(stunum){
+	    Stu.find({ "studentnum" : stunum }, function(err, student){
+		if (err) throw err;
+		console.log("student:"+student);
+		res.send(student);
+	    });
+    }
 };
 
 exports.updateStudent = function(req, res){
@@ -107,7 +109,7 @@ exports.registerUser = function(req, res){
             res.send("Username taken");
         }
 
-        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum});
+        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum, "role": "student"});
 
         newUser.save(function(err, newUser){
             if(err){

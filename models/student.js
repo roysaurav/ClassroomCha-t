@@ -43,6 +43,10 @@ var studentSchema = new Schema(
 
 	status: {
 	    type: String
+	},
+	
+	role: {
+	     type: String
 	}
     },
     {

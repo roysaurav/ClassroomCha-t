@@ -19,6 +19,9 @@
 		<div id="profilelink">
 		</div>
 
+		<div id="adminlink">
+		</div>
+
 		<div id="tag-drop">
 		</div>
 
@@ -75,12 +78,27 @@
 
 			<li class="profile page">
 			  <div class="form">
+				<h2 id="profilemessage"></h2>
 				<h3 id="titleuser">Username:</h3>
 				<div id="usernamedisplay">
 				</div>
 				<h3 id="titleemail">Update your email</h3>
 				<input id="emailInput" type="text" />
-				<h3 id="titleaddcourse">Add Courses (Enter how many courses you want to add)</h3>
+				<h3 id="titlegivenname">Change Given Name</h3>
+				<input id="givennameInput" type="text" />
+				<h3 id="titlelastname">Change Last Name</h3>
+				<input id="lastnameInput" type="text" />
+				<h3 id="changepasstitle">Change your password</h3>
+				<input id="changepasswordinput" type="password" />
+				<h3 id="confirmpasstitle">Confirm your password</h3>
+				<input id="confirmchangepasswordinput" type="password" />
+				<div id="changestudentnumber">
+				</div>
+				<div id="changestatus">
+				</div>
+				<div id="changeyear">
+				</div>
+				<h3 id="titleaddcourse">Add Courses (Enter the code of the course you want to add)</h3>
 				<input id="addcourse" type="text" />
 				<button id="addcoursebutton" type="button">Submit</button>
 				<h3 id="titleremovecourses">Remove Courses</h3>
@@ -90,6 +108,41 @@
 					<button id="save" type="button">Save</button>
 				</form>
 			      </div>
+			</li>
+
+			<li class="admin page">
+			  <div class="form">
+				<h3 id="titleadmin">Admin Page</h3>
+				<h2 id="adminmessage"></h2>
+				<table style="width:100%" id="userlistdisplay">
+        
+    				</table>
+				<form id="getstudentinfouser" method="post">
+					<h3 id="getusertitle">Find User by username</h3>
+					<input id="getusernameinput" type="text" />
+					<button id="getinfobyuser" type="button">Find User</button>
+				</form>
+				<form id="getstudentinfonum" method="post">
+					<h3 id="getuserbynumtitle">Find User by student number</h3>
+					<input id="getusernuminput" type="number" />
+					<button id="getinfobynum" type="button">Find User</button>
+				</form>
+				<form id="changeuserprivilege" method="post">
+					<h3 id="changeroletitle">Change User role (type in username of user to change)</h3>
+					<input id="changeroleusername" type="text" />
+					<select id="userroledrop">
+				  		<option value="student">Student</option>
+				  		<option value="instructor">Instructor</option>
+				  		<option value="admin">Admin</option>
+					</select>
+					<button id="changerolesave" type="button">Save</button>
+				</form>
+				<form id="deleteuser" method="post">
+					<h3 id="deleteusertitle">Delete User by username</h3>
+					<input id="deleteusernameinput" type="text" />
+					<button id="deleteuserbyuser" type="button">Delete User</button>
+				</form>
+			  </div>
 			</li>
 		</ul>
 
