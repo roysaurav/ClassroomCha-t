@@ -17,7 +17,7 @@ $(function() {
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
   var $profilePage = $('.profile.page'); //The profile page
-  var $adminPage = $('.admin.page');
+  var $adminPage = $('.admin.page'); //The admin page
 
   // Prompt for setting a username
   var username;
