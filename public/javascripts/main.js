@@ -60,6 +60,7 @@ $(function() {
           $loginPage.off('click');
 
           socket.emit('add user', username);
+	  student = true;
           userSetUp(resp);
 
         }else{
@@ -409,9 +410,15 @@ $(function() {
             $chatPage.show();
             $loginPage.off('click');
             //$currentInput = $inputMessage.focus();
-
             // Tell the server your username
             socket.emit('add user', username);
+            if (resp_data[0].role == "instructor"){
+			instructor = true;
+			createTagFilter();
+	    }
+	    else{
+			student = true;
+            }
             userSetUp(resp_data[0]);
             //check if user is an instructor
 
