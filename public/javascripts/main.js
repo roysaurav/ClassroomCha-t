@@ -47,6 +47,7 @@ $(function() {
   function openProfile() {
       $chatPage.hide();
       $profilePage.show();
+      document.getElementById("profilemessage").innerText = "";
   }
 
   $('#register').submit(function(event){
@@ -85,9 +86,48 @@ $(function() {
       	});
       	profparent.append(tmp);
       	createCourseList(user);
+	if (student){
+		studentProfileFields(user);
+	}
       	addHandlers();
   }
 
+  function studentProfileFields(user){
+		document.getElementById('changestudentnumber').innerHTML = "";
+		document.getElementById('changeyear').innerHTML = "";
+		document.getElementById('changestatus').innerHTML = "";
+		let studentnumparent = $('#changestudentnumber');
+		tmp = $('<h3>').text("Change Student Number");
+		studentnumparent.append(tmp);
+		tmp = $('<input>');
+		tmp.attr('id','changestudentnum');
+		tmp.attr('type', 'number');
+		studentnumparent.append(tmp);
+		let yearparent = $('#changeyear');
+		tmp = $('<h3>').text("Change Year");
+		yearparent.append(tmp);
+		tmp = $('<input>');
+		tmp.attr('id','changeyearinput');
+		tmp.attr('type', 'number');
+		yearparent.append(tmp);
+		let statusparent = $('#changestatus');
+		tmp = $('<h3>').text("Change Status");
+		statusparent.append(tmp);
+		tmp = $('<select>');
+		tmp.attr('id','statusinput');
+		let statuslist = ["Undergrad","MsC","PhD","MScAC","MEng"];
+		for (let i = 0; i < statuslist.length; i++){
+			let tmpopt = $('<option>').text(statuslist[i]);
+			tmpopt.attr('value',statuslist[i]);
+			console.log(user.status);
+			console.log(statuslist[i]);
+			if (user.status == statuslist[i]){
+				tmpopt.attr('selected','selected');
+			}
+			tmp.append(tmpopt);
+		}
+		statusparent.append(tmp);
+  }
   function profilePage(user){
 	let username = user.username;
         let userparent = $('#usernamedisplay');
@@ -157,14 +197,69 @@ $(function() {
 		}
 		document.getElementById("addcourse").value = "";
 	});
+	document.getElementById("changepasswordinput").value = "";
+	document.getElementById("confirmchangepasswordinput").value = "";
+	document.getElementById("emailInput").value = user.email;
+	document.getElementById("givennameInput").value = user.givenname;
+	document.getElementById("lastnameInput").value = user.lastname;
+	if (student){
+		document.getElementById("changestudentnum").value = user.studentnum;
+		document.getElementById("changeyearinput").value = user.year;
+	}
 	$("#save").on('click', function(){
+		let changeemail = document.getElementById("emailInput").value
+		if (changeemail.length == 0){
+			changeemail = user.email;
+		}
+		let changepass = document.getElementById("changepasswordinput").value;
+		let confirmpass = document.getElementById("confirmchangepasswordinput").value;
+		console.log(changepass.length);
+		console.log(confirmpass.length);
+		let nopass = false;
+		if (changepass.length == 0 && confirmpass.length == 0){
+			changepass = user.password;
+			nopass = true;
+		}
+		let changegivenname = document.getElementById("givennameInput").value;
+		if (changegivenname.length == 0){
+			changegivenname = user.givenname;
+		}
+		let changelastname = document.getElementById("lastnameInput").value;
+		if (changelastname.length == 0){
+			changelastname = user.lastname;
+		}
+		let changestudentnum = user.studentnum;
+		let changeyear = user.year;
+		let changestatus = user.status;
+		if(student){
+			changestudentnum = document.getElementById("changestudentnum").value;
+			if (changestudentnum.length == 0){
+				changestudentnum = user.studentnum;
+			}
+			changeyear = document.getElementById("changeyearinput").value;
+			if (changeyear.length == 0){
+				changeyear = user.year;
+			}
+			changestatus = document.getElementById("statusinput").value;
+			if (changestatus.length == 0){
+				changestatus = user.status;
+			}
+		}
 		console.log(courses);
 		console.log(user.courses);
 		console.log(username);
-		$.post('/update_student', { username: username, password: user.password,  email: user.email, studentnum: user.studentnum, courses: courses, givenname: user.givenname, lastname: user.lastname, year: user.year, status: user.status}, function(resp_data){
-				console.log(resp_data);
-				userSetUp(resp_data);
-		});
+		if (nopass || (changepass == confirmpass)){
+			$.post('/update_student', { username: username, password: changepass,  email: changeemail, studentnum: changestudentnum, courses: courses, givenname: changegivenname, lastname: changelastname, year: changeyear, status: changestatus}, function(resp_data){
+					console.log(resp_data);
+					document.getElementById("profilemessage").innerText = "Profile Information Saved";
+					document.getElementById("changepasswordinput").value = "";
+					document.getElementById("confirmchangepasswordinput").value = "";
+					userSetUp(resp_data);
+			});
+		}
+		else{
+			document.getElementById("profilemessage").innerText = "Please make sure your password fields match";
+		}
 	});
   }
 
