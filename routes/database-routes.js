@@ -98,7 +98,7 @@ exports.registerUser = function(req, res){
             res.send("Username taken");
         }
 
-        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum});
+        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum, "role": "student"});
 
         newUser.save(function(err, newUser){
             if(err){
