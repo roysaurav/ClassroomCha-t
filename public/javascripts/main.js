@@ -77,6 +77,7 @@ $(function() {
   });
   function adminTable(data){
 	document.getElementById("userlistdisplay").innerHTML = "";
+	document.getElementById("adminmessage").innerText = "";
 	let tableparent = $('#userlistdisplay');
 	let tmp = $('<tr>');
 	tmp.append($('<th>').text('Username'));
@@ -127,6 +128,16 @@ $(function() {
 		 $.get('/get_student', { studentnumber: stunum }, function(resp_data){
 				console.log(resp_data);
 				adminTable(resp_data);
+			});
+	});
+	$("#changerolesave").on('click', function(){
+		let userrole = document.getElementById("userroledrop").value;
+		let username = document.getElementById("changeroleusername").value;
+		console.log(username);
+		$.post('/update_student', { username: username, role: userrole}, function(resp_data){
+					document.getElementById("userlistdisplay").innerHTML = "";
+					document.getElementById("adminmessage").innerText = "User Role Changed";
+					console.log(resp_data);
 			});
 	});
   }
