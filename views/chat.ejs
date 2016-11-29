@@ -50,20 +50,20 @@
 			<li class="login page">
 				<div id="login-area">
 				  <form class="form" method="post" id="login-form">
-				    <h3 class="title">What's your nickname?</h3>
-				    <input class="usernameInput" name="username" type="text" maxlength="14" />
-				    <h3 class="title">What's your password?</h3>
-				    <input class="passwordInput" name="password" type="password"/><br>
+				    <h3 class="title">Username</h3>
+				    <input class="usernameInput" name="username" type="text" maxlength="14" pattern=".+" required>
+				    <h3 class="title">Password</h3>
+				    <input class="passwordInput" name="password" type="password" pattern=".+" required><br>
 				    <input id="register-button" type="button" value="Register">
 				  </form>
 			    </div>
 
 			    <div id="register-area">
 				  <form class="form" id="register" method="post">
-				    <input placeholder="Username" type="text" name="username" id="username"><br>
-				    <input placeholder="Password" type="text" name="password" id="password"><br>
-				    <input placeholder="Email" type="text" name="email" id="email"><br>
-				    <input placeholder="Student Number" type="text" name="stunum" id="stunum"><br>
+				    <input placeholder="Username" type="text" name="username" id="username" pattern=".+" required><br>
+				    <input placeholder="Password" type="password" name="password" id="password" pattern=".+" required><br>
+				    <input placeholder="Email" type="text" name="email" id="email" pattern=".+" required><br>
+				    <input placeholder="Student Number" type="text" name="stunum" id="stunum" pattern="([0-9]{9})|([0-9]{10}){1}" required><br>
 
 				    <input type="submit" value="Register">
 				    <input id="login-button" type="button" value="Back to login">

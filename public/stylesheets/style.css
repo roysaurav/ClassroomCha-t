@@ -238,6 +238,11 @@ ul {
   text-align: center;
 }
 
+input:invalid {
+  background-color: #ffc6Bb;
+  outline: 2px solid red;
+}
+
 select {
     -webkit-appearance: none;
     -moz-appearance: none;

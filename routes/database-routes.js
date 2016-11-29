@@ -96,32 +96,88 @@ exports.addMessage = function(req, res) {
 
 exports.registerUser = function(req, res){
 
-    let username = req.body.username;
-    let password = bcrypt.hashSync(req.body.password);
-    let email = req.body.email;
-    let stunum = req.body.stunum;
+    console.log(req);
 
-    console.log(password);
+    // Checking if the fields (by name) aren't empty:
+    req.assert('username', 'A username is required').notEmpty();
+    req.assert('password', 'A password is required').notEmpty();
+    req.assert('email', 'A email is required').notEmpty();
+    req.assert('stunum', 'A student number is required').notEmpty();
 
-    Stu.find({ "username" : username }, function(err, student){
+    // Checking student number (use your custom validation functions):
+    req.checkBody('username', 'Username not formatted properly.').isWord();
 
-        if(student.length > 0){
-            res.send("Username taken");
+    // Checking phone number:
+    req.checkBody('password', 'Password not formatted properly.').isWord();
+
+    // Checking birthday:
+    req.checkBody('email', 'Email not formatted properly.').isWord();
+
+    // Checking birthday:
+    req.checkBody('stunum', 'Student number not formatted properly.').isStuNum();
+
+    
+
+    // Checking for errors and mapping them:
+    var errors = req.validationErrors();
+    var mappedErrors = req.validationErrors(true);
+
+    if (errors) {
+        // If errors exist, send them back to the form:
+        var errorMsgs = { 'errors': {} };
+
+        if (mappedErrors.username) {
+            errorMsgs.errors.error_username = mappedErrors.username.msg;
         }
 
-        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum, "role": "student"});
+        if (mappedErrors.password) {
+            errorMsgs.errors.error_password = mappedErrors.password.msg;
+        }
 
-        newUser.save(function(err, newUser){
-            if(err){
-                throw err;
+        if (mappedErrors.email) {
+            errorMsgs.errors.error_email = mappedErrors.email.msg;
+        }
+
+        if (mappedErrors.stunum) {
+            errorMsgs.errors.error_stunum = mappedErrors.birthday.msg;
+        }
+
+        // Note how the placeholders in tapp.html use this JSON:
+        res.send(errorMsgs);
+
+    } else {
+            
+        let username = req.body.username;
+        let password = bcrypt.hashSync(req.body.password);
+        let email = req.body.email;
+        let stunum = req.body.stunum;
+
+        console.log(password);
+
+        Stu.find({ "username" : username }, function(err, student){
+
+            if(student.length > 0){
+                res.send("Username taken");
             }
 
-            res.send(newUser);
+            var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum, "role": "student"});
+
+            newUser.save(function(err, newUser){
+                if(err){
+                    throw err;
+                }
+
+                res.send(newUser);
+            });
+
+        
+        
         });
 
+    }
+
+
     
-    
-    });
 
 };
 

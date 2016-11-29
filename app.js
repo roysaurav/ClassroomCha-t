@@ -4,6 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var firebase = require("firebase");
+var expressValidator = require('express-validator');
 
 
 var routes = require('./routes/index');
@@ -27,6 +28,18 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator({
+    customValidators: {
+
+        isStuNum: function(value) {
+            return value.search("([0-9]{9})|([0-9]{10})") !== -1;
+        },
+        isWord: function(value) {
+            return value.search(".+") !== -1;
+        }
+
+    }
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -40,6 +53,7 @@ app.get('/get_messages', db_funcs.findByCourseName);
 app.post('/add_messages', db_funcs.addMessage);
 //app.get('/get_instructor', db_funcs.findInstructor);
 app.get('/get_student', db_funcs.findStudent);
+
 app.post('/update_student', db_funcs.updateStudent);
 app.post('/register', db_funcs.registerUser);
 app.post('/validateUser', db_funcs.validateUser);
@@ -47,8 +61,6 @@ app.post('/validateUser', db_funcs.validateUser);
 app.get('/courses/getcourses', courses);
 
 // Chat room stuff
-
-
 var numUsers = 0;
 
 /*
@@ -88,7 +100,6 @@ io.sockets.on('connection', function (socket) {
   });
 
 });
-
 
 function newMessage(socket, data, room){
 
