@@ -3,6 +3,8 @@ var Instr = require('../models/instructor');
 var Stu = require('../models/student');
 var Admin = require('../models/admin');
 
+var bcrypt = require("bcrypt-nodejs");
+
 /**
  * Finds the past messages from chats.
  *
@@ -86,6 +88,59 @@ exports.addMessage = function(req, res) {
 
         res.send('Success');
 
+    });
+
+};
+
+exports.registerUser = function(req, res){
+
+    let username = req.body.username;
+    let password = bcrypt.hashSync(req.body.password);
+    let email = req.body.email;
+    let stunum = req.body.stunum;
+
+    console.log(password);
+
+    Stu.find({ "username" : username }, function(err, student){
+
+        if(student.length > 0){
+            res.send("Username taken");
+        }
+
+        var newUser = new Stu({"username": username, "password": password, "email": email, "stunum": stunum});
+
+        newUser.save(function(err, newUser){
+            if(err){
+                throw err;
+            }
+
+            res.send(newUser);
+        });
+
+    
+    
+    });
+
+};
+
+
+exports.validateUser = function(req, res){
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    Stu.find({ "username" : username }, function(err, student){
+        console.log(student);
+        if(student.length === 0){
+            res.send("No user found with that username");
+        }
+
+        if(bcrypt.compareSync(password, student[0].password)){
+            res.send(student);
+        }else{
+            res.send("Incorrect password");
+        }
+    
     });
 
 };

@@ -41,7 +41,8 @@ app.post('/add_messages', db_funcs.addMessage);
 app.get('/get_instructor', db_funcs.findInstructor);
 app.get('/get_student', db_funcs.findStudent);
 app.post('/update_student', db_funcs.updateStudent);
-
+app.post('/register', db_funcs.registerUser);
+app.post('/validateUser', db_funcs.validateUser);
 
 app.get('/courses/getcourses', courses);
 

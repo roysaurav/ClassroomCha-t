@@ -45,13 +45,34 @@
 			  
 			</li>
 			<li class="login page">
-			  <div class="form">
-			    <h3 class="title">What's your nickname?</h3>
-			    <input class="usernameInput" type="text" maxlength="14" />
-			    <h3 class="title">What's your password?</h3>
-			    <input class="passwordInput" type="password"/>
-			  </div>
+				<div id="login-area">
+				  <form class="form" method="post" id="login-form">
+				    <h3 class="title">What's your nickname?</h3>
+				    <input class="usernameInput" name="username" type="text" maxlength="14" />
+				    <h3 class="title">What's your password?</h3>
+				    <input class="passwordInput" name="password" type="password"/><br>
+				    <input id="register-button" type="button" value="Register">
+				  </form>
+			    </div>
+
+			    <div id="register-area">
+				  <form class="form" id="register" method="post">
+				    <input placeholder="Username" type="text" name="username" id="username"><br>
+				    <input placeholder="Password" type="text" name="password" id="password"><br>
+				    <input placeholder="Email" type="text" name="email" id="email"><br>
+				    <input placeholder="Student Number" type="text" name="stunum" id="stunum"><br>
+
+				    <input type="submit" value="Register">
+				    <input id="login-button" type="button" value="Back to login">
+				  </form>
+			    </div>			  
+
+
 			</li>
+
+
+
+
 			<li class="profile page">
 			  <div class="form">
 				<h3 id="titleuser">Username:</h3>
@@ -86,6 +107,22 @@
 			document.getElementById('tag-icon').style.display = "none";
 			document.getElementById('tag-select').style.display = "";
 		};
+
+		$('#register-area').hide();
+
+    	$('#register-button').on('click', function(){
+    		$('#login-area').fadeOut();
+    		$('#register-area').fadeIn();
+    	});
+
+    	$('#login-button').on('click', function(){
+    		$('#register-area').fadeOut();
+    		$('#login-area').fadeIn();
+    	});
+
+	   	
+
+
 	</script>
 
 </body>
