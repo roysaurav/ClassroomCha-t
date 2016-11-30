@@ -31,6 +31,12 @@ exports.findStudent = function(req, res){
 		res.send(student);
 	    });
     }
+    else{
+	Stu.find({}, function(err, student){
+		if (err) throw err;
+		res.send(student);
+	});
+    }
 };
 
 exports.updateStudent = function(req, res){
@@ -41,6 +47,17 @@ exports.updateStudent = function(req, res){
 	console.log("Student Saved");
 	console.log(student);
 	res.send(student);
+    });
+};
+
+exports.deleteStudent = function(req, res){
+    console.log("delete here");
+    let user = req.body.username;
+    console.log(user);
+    Stu.findOneAndRemove({ "username" : user}, function(err){
+	if (err) throw err;
+	console.log("Student Removed");
+	res.send("Success");
     });
 };
 

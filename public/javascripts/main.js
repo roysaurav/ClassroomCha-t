@@ -17,7 +17,7 @@ $(function() {
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
   var $profilePage = $('.profile.page'); //The profile page
-  var $adminPage = $('.admin.page');
+  var $adminPage = $('.admin.page'); //The admin page
 
   // Prompt for setting a username
   var username;
@@ -77,10 +77,12 @@ $(function() {
   });
   function adminTable(data){
 	document.getElementById("userlistdisplay").innerHTML = "";
+	document.getElementById("adminmessage").innerText = "";
 	let tableparent = $('#userlistdisplay');
 	let tmp = $('<tr>');
 	tmp.append($('<th>').text('Username'));
 	tmp.append($('<th>').text('Student Number'));
+	tmp.append($('<th>').text('E-mail'));
 	tmp.append($('<th>').text('Given Name'));
 	tmp.append($('<th>').text('Family Name'));
 	tmp.append($('<th>').text('Status'));
@@ -91,6 +93,7 @@ $(function() {
 		tmp = $('<tr>');
 		tmp.append($('<td>').text(data[i].username));
 		tmp.append($('<td>').text(data[i].studentnum));
+		tmp.append($('<td>').text(data[i].email));
 		tmp.append($('<td>').text(data[i].givenname));
 		tmp.append($('<td>').text(data[i].lastname));
 		tmp.append($('<td>').text(data[i].status));
@@ -115,6 +118,12 @@ $(function() {
   }
 
   function adminFunction(){
+	$("#getalluser").on('click', function(){
+		$.get('/get_student', {}, function(resp_data){
+				console.log(resp_data);
+				adminTable(resp_data);
+			});
+	});
 	$("#getinfobyuser").on('click', function(){
 		let username = document.getElementById("getusernameinput").value;
 		 $.get('/get_student', { username: username }, function(resp_data){
@@ -127,6 +136,24 @@ $(function() {
 		 $.get('/get_student', { studentnumber: stunum }, function(resp_data){
 				console.log(resp_data);
 				adminTable(resp_data);
+			});
+	});
+	$("#changerolesave").on('click', function(){
+		let userrole = document.getElementById("userroledrop").value;
+		let username = document.getElementById("changeroleusername").value;
+		console.log(username);
+		$.post('/update_student', { username: username, role: userrole}, function(resp_data){
+					document.getElementById("userlistdisplay").innerHTML = "";
+					document.getElementById("adminmessage").innerText = "User Role Changed";
+					console.log(resp_data);
+			});
+	});
+	$("#deleteuserbyuser").on('click', function(){
+		let username = document.getElementById("deleteusernameinput").value;
+		console.log(username);
+		$.post('/remove_student', { username: username }, function(resp_data){
+					document.getElementById("userlistdisplay").innerHTML = "";
+					document.getElementById("adminmessage").innerText = "User Removed";
 			});
 	});
   }
