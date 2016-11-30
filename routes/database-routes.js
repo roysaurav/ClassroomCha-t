@@ -31,6 +31,12 @@ exports.findStudent = function(req, res){
 		res.send(student);
 	    });
     }
+    else{
+	Stu.find({}, function(err, student){
+		if (err) throw err;
+		res.send(student);
+	});
+    }
 };
 
 exports.updateStudent = function(req, res){
