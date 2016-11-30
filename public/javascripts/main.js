@@ -118,6 +118,12 @@ $(function() {
   }
 
   function adminFunction(){
+	$("#getalluser").on('click', function(){
+		$.get('/get_student', {}, function(resp_data){
+				console.log(resp_data);
+				adminTable(resp_data);
+			});
+	});
 	$("#getinfobyuser").on('click', function(){
 		let username = document.getElementById("getusernameinput").value;
 		 $.get('/get_student', { username: username }, function(resp_data){
