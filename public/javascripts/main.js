@@ -82,6 +82,7 @@ $(function() {
 	let tmp = $('<tr>');
 	tmp.append($('<th>').text('Username'));
 	tmp.append($('<th>').text('Student Number'));
+	tmp.append($('<th>').text('E-mail'));
 	tmp.append($('<th>').text('Given Name'));
 	tmp.append($('<th>').text('Family Name'));
 	tmp.append($('<th>').text('Status'));
@@ -92,6 +93,7 @@ $(function() {
 		tmp = $('<tr>');
 		tmp.append($('<td>').text(data[i].username));
 		tmp.append($('<td>').text(data[i].studentnum));
+		tmp.append($('<td>').text(data[i].email));
 		tmp.append($('<td>').text(data[i].givenname));
 		tmp.append($('<td>').text(data[i].lastname));
 		tmp.append($('<td>').text(data[i].status));
