@@ -140,6 +140,14 @@ $(function() {
 					console.log(resp_data);
 			});
 	});
+	$("#deleteuserbyuser").on('click', function(){
+		let username = document.getElementById("deleteusernameinput").value;
+		console.log(username);
+		$.post('/remove_student', { username: username }, function(resp_data){
+					document.getElementById("userlistdisplay").innerHTML = "";
+					document.getElementById("adminmessage").innerText = "User Removed";
+			});
+	});
   }
 
   function userSetUp(user){

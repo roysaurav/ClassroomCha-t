@@ -44,6 +44,17 @@ exports.updateStudent = function(req, res){
     });
 };
 
+exports.deleteStudent = function(req, res){
+    console.log("delete here");
+    let user = req.body.username;
+    console.log(user);
+    Stu.findOneAndRemove({ "username" : user}, function(err){
+	if (err) throw err;
+	console.log("Student Removed");
+	res.send("Success");
+    });
+};
+
 exports.findByCourseName = function(req, res) {
 
     let course = req.query.course;
