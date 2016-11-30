@@ -69,7 +69,6 @@ var numUsers = 0;
  * Socket is essentially a user
  *
  */
-
 io.sockets.on('connection', function (socket) {
 
   var addedUser = false;
