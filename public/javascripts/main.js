@@ -478,6 +478,7 @@ $(function() {
     chatRoomApp.$window.keydown(function(event) {
         // When the client hits ENTER on their keyboard
         if (event.which === 13) {
+            console.log(chatRoomApp.valid);
             if (chatRoomApp.valid) {
                 chatRoomApp.sendMessage();
             } else {
@@ -583,7 +584,7 @@ $(function() {
         $.post('/register', $(this).serialize(), function(resp) {
             if (typeof resp != "string") {
                 username = chatRoomApp.cleanInput($('#username').val().trim());
-                valid = true;
+                chatRoomApp.valid = true;
                 chatRoomApp.$loginPage.fadeOut();
                 chatRoomApp.$chatPage.show();
                 chatRoomApp.$loginPage.off('click');
