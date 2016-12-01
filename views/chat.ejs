@@ -156,31 +156,5 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/javascripts/main.js"></script>
 
-	<script type="text/javascript">
-
-		document.getElementById('tag-select').style.display = "none";
-
-		document.getElementById('tag-icon').onclick = function(){
-			document.getElementById('tag-icon').style.display = "none";
-			document.getElementById('tag-select').style.display = "";
-		};
-
-		$('#register-area').hide();
-
-    	$('#register-button').on('click', function(){
-    		$('#login-area').fadeOut();
-    		$('#register-area').fadeIn();
-    	});
-
-    	$('#login-button').on('click', function(){
-    		$('#register-area').fadeOut();
-    		$('#login-area').fadeIn();
-    	});
-
-	   	
-
-
-	</script>
-
 </body>
 </html>

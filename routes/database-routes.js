@@ -113,8 +113,6 @@ exports.addMessage = function(req, res) {
 
 exports.registerUser = function(req, res){
 
-    console.log(req);
-
     // Checking if the fields (by name) aren't empty:
     req.assert('username', 'A username is required').notEmpty();
     req.assert('password', 'A password is required').notEmpty();
@@ -132,8 +130,6 @@ exports.registerUser = function(req, res){
 
     // Checking birthday:
     req.checkBody('stunum', 'Student number not formatted properly.').isStuNum();
-
-    
 
     // Checking for errors and mapping them:
     var errors = req.validationErrors();
@@ -192,9 +188,6 @@ exports.registerUser = function(req, res){
         });
 
     }
-
-
-    
 
 };
 
