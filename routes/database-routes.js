@@ -18,24 +18,24 @@ exports.findStudent = function(req, res){
     console.log(user);
     console.log(stunum);
     if(user){
-	    Stu.find({ "username" : user }, function(err, student){
-		if (err) throw err;
-		console.log("student:"+student);
-		res.send(student);
-	    });
+        Stu.find({ "username" : user }, function(err, student){
+        if (err) throw err;
+        console.log("student:"+student);
+        res.send(student);
+        });
     }
     else if(stunum){
-	    Stu.find({ "studentnum" : stunum }, function(err, student){
-		if (err) throw err;
-		console.log("student:"+student);
-		res.send(student);
-	    });
+        Stu.find({ "studentnum" : stunum }, function(err, student){
+        if (err) throw err;
+        console.log("student:"+student);
+        res.send(student);
+        });
     }
     else{
-	Stu.find({}, function(err, student){
-		if (err) throw err;
-		res.send(student);
-	});
+    Stu.find({}, function(err, student){
+        if (err) throw err;
+        res.send(student);
+    });
     }
 };
 
@@ -43,10 +43,10 @@ exports.updateStudent = function(req, res){
     let user = req.body.username;
     console.log(user);
     Stu.findOneAndUpdate({ "username" : user},req.body, {new: true}, function(err, student){
-	if (err) throw err;
-	console.log("Student Saved");
-	console.log(student);
-	res.send(student);
+    if (err) throw err;
+    console.log("Student Saved");
+    console.log(student);
+    res.send(student);
     });
 };
 
@@ -55,9 +55,9 @@ exports.deleteStudent = function(req, res){
     let user = req.body.username;
     console.log(user);
     Stu.findOneAndRemove({ "username" : user}, function(err){
-	if (err) throw err;
-	console.log("Student Removed");
-	res.send("Success");
+    if (err) throw err;
+    console.log("Student Removed");
+    res.send("Success");
     });
 };
 
@@ -73,18 +73,18 @@ exports.findByCourseName = function(req, res) {
 
     if (tag == 'none'){
 
-	    Chat.find({ "course" : course }, function(err, allChats) {
-		if (err) throw err;
+        Chat.find({ "course" : course }, function(err, allChats) {
+        if (err) throw err;
 
-		res.send(allChats);
-	    });
+        res.send(allChats);
+        });
     }
     else{
-	    Chat.find({ "course" : course, "tag" : tag }, function(err, allChats) {
-		if (err) throw err;
+        Chat.find({ "course" : course, "tag" : tag }, function(err, allChats) {
+        if (err) throw err;
 
-		res.send(allChats);
-	    });
+        res.send(allChats);
+        });
     }
 
 };

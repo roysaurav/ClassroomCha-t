@@ -604,24 +604,24 @@ $(function() {
     });
 
     chatRoomApp.init = function(){
-    	document.getElementById('tag-select').style.display = "none";
+      document.getElementById('tag-select').style.display = "none";
 
-		document.getElementById('tag-icon').onclick = function(){
-			document.getElementById('tag-icon').style.display = "none";
-			document.getElementById('tag-select').style.display = "";
-		};
+    document.getElementById('tag-icon').onclick = function(){
+      document.getElementById('tag-icon').style.display = "none";
+      document.getElementById('tag-select').style.display = "";
+    };
 
-		$('#register-area').hide();
+    $('#register-area').hide();
 
-    	$('#register-button').on('click', function(){
-    		$('#login-area').fadeOut();
-    		$('#register-area').fadeIn();
-    	});
+      $('#register-button').on('click', function(){
+        $('#login-area').fadeOut();
+        $('#register-area').fadeIn();
+      });
 
-    	$('#login-button').on('click', function(){
-    		$('#register-area').fadeOut();
-    		$('#login-area').fadeIn();
-    	});
+      $('#login-button').on('click', function(){
+        $('#register-area').fadeOut();
+        $('#login-area').fadeIn();
+      });
     };
 
     chatRoomApp.init();
