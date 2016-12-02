@@ -198,15 +198,15 @@ exports.validateUser = function(req, res){
     let password = req.body.password;
 
     Stu.find({ "username" : username }, function(err, student){
-        console.log(student);
+        
         if(student.length === 0){
             res.send("No user found with that username");
-        }
-
-        if(bcrypt.compareSync(password, student[0].password)){
-            res.send(student);
         }else{
-            res.send("Incorrect password");
+            if(bcrypt.compareSync(password, student[0].password)){
+            res.send(student);
+            }else{
+                res.send("Incorrect password");
+            }
         }
     
     });
