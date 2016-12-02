@@ -247,6 +247,10 @@ $(function() {
         if (chatRoomApp.student) {
             document.getElementById("changestudentnum").value = user.studentnum;
             document.getElementById("changeyearinput").value = user.year;
+        }else{
+           $('#changestudentnumber').parent().parent().remove();
+           $('#changestatus').parent().parent().remove();
+           $('#changeyear').parent().parent().remove();
         }
 
         $("#save").on('click', function() {
@@ -493,7 +497,7 @@ $(function() {
                         chatRoomApp.valid = true;
                         chatRoomApp.$loginPage.fadeOut();
                         //chatRoomApp.$chatPage.show();
-                        chatRoomApp.$profilePage.show();
+                        
                         chatRoomApp.$loginPage.off('click');
 
                         chatRoomApp.socket.emit('add user', username);
@@ -509,6 +513,8 @@ $(function() {
                             chatRoomApp.student = true;
                         }
                         chatRoomApp.userSetUp(resp_data[0]);
+                        chatRoomApp.openProfile();
+                        chatRoomApp.profilePage(resp_data[0]);
                     }
 
                 });
@@ -587,11 +593,14 @@ $(function() {
                 username = chatRoomApp.cleanInput($('#username').val().trim());
                 chatRoomApp.valid = true;
                 chatRoomApp.$loginPage.fadeOut();
-                chatRoomApp.$chatPage.show();
+                //chatRoomApp.$chatPage.show();
+                
                 chatRoomApp.$loginPage.off('click');
                 chatRoomApp.socket.emit('add user', username);
                 chatRoomApp.student = true;
                 chatRoomApp.userSetUp(resp);
+                chatRoomApp.openProfile();
+                chatRoomApp.profilePage(resp);
 
             } else {
                 chatRoomApp.valid = false;
