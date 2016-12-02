@@ -109,6 +109,8 @@ function newMessage(socket, data, room){
       message: data
     });
 
+    console.log("Username: " + socket.username);
+
 }
 
 function addUser(socket, username, user, room){
@@ -119,27 +121,12 @@ function addUser(socket, username, user, room){
     socket.username = username;
     ++numUsers;
     addedUser = true;
-    socket.emit('login', {
-      numUsers: numUsers
-    });
-    // echo globally (all clients) that a person has connected
-    socket.broadcast.to(room).emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
-    });
 
 }
 
 function disconnect(socket, user, room){
-
     if (user) {
       --numUsers;
-
-      // echo globally that this client has left
-      socket.broadcast.to(room).emit('user left', {
-        username: socket.username,
-        numUsers: numUsers
-      });
     }
 
 }

@@ -21,6 +21,11 @@ $(function() {
     chatRoomApp.socket = io();
     chatRoomApp.valid = false;
     chatRoomApp.room = '';
+    chatRoomApp.COLORS = [
+        '#e21400', '#91580f', '#f8a700', '#f78b00',
+        '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+        '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+    ];
 
     //open profile page when button is clicked
     chatRoomApp.openProfile = function() {
@@ -346,8 +351,8 @@ $(function() {
         parenttag.append(tmp);
         $('#tagfil').change(function() {
             console.log('drop change');
-            tagfilter = this.value.replace(/\s/, '');
-            console.log('tag filter: ' + tagfilter);
+            chatRoomApp.tagfilter = this.value.replace(/\s/, '');
+            console.log('tag filter: ' + chatRoomApp.tagfilter);
             chatRoomApp.clearMessages();
             var message = "Welcome to " + chatRoomApp.room + "\'s Chat!";
             chatRoomApp.log(message, { prepend: true});
@@ -418,7 +423,7 @@ $(function() {
 
         var $usernameDiv = $('<span class="username"/>')
             .text(data.username)
-            .css('color', chatRoomApp.getUsernameColor());
+            .css('color', chatRoomApp.getUsernameColor(data.username));
         var $messageBodyDiv = $('<span class="messageBody">')
             .text(data.message);
         if (data.tag != "notag" && data.tag != "0" && chatRoomApp.instructor || chatRoomApp.admin) {
@@ -473,9 +478,15 @@ $(function() {
         return $('<div/>').text(input).text();
     }
 
-    // Gets the color of a username through our hash function
-    chatRoomApp.getUsernameColor = function() {
-        return ['red', 'orange', 'yellow', 'green', 'blue', 'purple'][Math.random() * 6 | 0]
+    chatRoomApp.getUsernameColor = function(username) {
+        // Compute hash code
+        var hash = 7;
+        for (var i = 0; i < username.length; i++) {
+           hash = username.charCodeAt(i) + (hash << 5) - hash;
+        }
+        // Calculate color
+        var index = Math.abs(hash % chatRoomApp.COLORS.length);
+        return chatRoomApp.COLORS[index];
     }
 
     chatRoomApp.$window.keydown(function(event) {
@@ -500,7 +511,7 @@ $(function() {
                         
                         chatRoomApp.$loginPage.off('click');
 
-                        chatRoomApp.socket.emit('add user', username);
+                        chatRoomApp.socket.emit('add user', chatRoomApp.username);
 
                         if (resp_data[0].role == "admin") {
                             chatRoomApp.admin = true;
