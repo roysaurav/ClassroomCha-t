@@ -132,6 +132,7 @@ $(function() {
             chatRoomApp.openProfile();
             chatRoomApp.profilePage(user);
         });
+        $("#classtitle").show();
         profparent.append(tmp);
         chatRoomApp.createCourseList(user);
         if (chatRoomApp.student) {
@@ -491,7 +492,8 @@ $(function() {
                         chatRoomApp.username = chatRoomApp.cleanInput(resp_data[0].username.trim());
                         chatRoomApp.valid = true;
                         chatRoomApp.$loginPage.fadeOut();
-                        chatRoomApp.$chatPage.show();
+                        //chatRoomApp.$chatPage.show();
+                        chatRoomApp.$profilePage.show();
                         chatRoomApp.$loginPage.off('click');
 
                         chatRoomApp.socket.emit('add user', username);
@@ -581,12 +583,12 @@ $(function() {
 
         $.post('/register', $(this).serialize(), function(resp) {
             if (typeof resp != "string") {
+                
                 username = chatRoomApp.cleanInput($('#username').val().trim());
                 chatRoomApp.valid = true;
                 chatRoomApp.$loginPage.fadeOut();
                 chatRoomApp.$chatPage.show();
                 chatRoomApp.$loginPage.off('click');
-
                 chatRoomApp.socket.emit('add user', username);
                 chatRoomApp.student = true;
                 chatRoomApp.userSetUp(resp);
@@ -608,6 +610,8 @@ $(function() {
       document.getElementById('tag-icon').style.display = "none";
       document.getElementById('tag-select').style.display = "";
     };
+
+    $("#classtitle").hide();
 
     $('#register-area').hide();
 
