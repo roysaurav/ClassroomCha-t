@@ -418,7 +418,7 @@ $(function() {
             .css('color', chatRoomApp.getUsernameColor());
         var $messageBodyDiv = $('<span class="messageBody">')
             .text(data.message);
-        if (data.tag != "notag" && data.tag != "0" && chatRoomApp.instructor) {
+        if (data.tag != "notag" && data.tag != "0" && chatRoomApp.instructor && chatRoomApp.admin) {
             var $tagDiv = $('<span class="tagBody">')
                 .text("  " + data.tag)
                 .css('color', 'aqua');
