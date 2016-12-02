@@ -145,24 +145,21 @@ $(function() {
         document.getElementById('changeyear').innerHTML = "";
         document.getElementById('changestatus').innerHTML = "";
         let studentnumparent = $('#changestudentnumber');
-        tmp = $('<h3>').text("Change Student Number");
-        studentnumparent.append(tmp);
         tmp = $('<input>');
         tmp.attr('id', 'changestudentnum');
         tmp.attr('type', 'number');
+        tmp.attr('class', 'form-control');
         studentnumparent.append(tmp);
         let yearparent = $('#changeyear');
-        tmp = $('<h3>').text("Change Year");
-        yearparent.append(tmp);
         tmp = $('<input>');
         tmp.attr('id', 'changeyearinput');
         tmp.attr('type', 'number');
+        tmp.attr('class', 'form-control');
         yearparent.append(tmp);
         let statusparent = $('#changestatus');
-        tmp = $('<h3>').text("Change Status");
-        statusparent.append(tmp);
         tmp = $('<select>');
         tmp.attr('id', 'statusinput');
+        tmp.attr('class', 'form-control');
         let statuslist = ["Undergrad", "MsC", "PhD", "MScAC", "MEng"];
         for (let i = 0; i < statuslist.length; i++) {
             let tmpopt = $('<option>').text(statuslist[i]);
@@ -196,6 +193,7 @@ $(function() {
             tmplab.attr('for', 'button' + courses[i]);
             tmplab.attr('value', courses[i]);
             tmplab.attr('id', 'label' + courses[i]);
+            tmplab.attr('style', 'margin-right:2%;');
             tmp.append(tmplab)
             let tmpbut = $('<input>');
             tmpbut.attr('type', 'submit');
