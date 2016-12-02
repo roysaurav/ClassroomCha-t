@@ -10,7 +10,7 @@ Upon entering the home page, a new user can click on register to be directed to 
 
 Existing users can simply log in using their username and password which will direct them to the main page.
 
-In this page, they can view their courses on the left bar. By click on the profile button, they can view their current courses, remove course or add course.
+In this page, they can view their courses on the left bar. By clicking on the profile button, they can view their current courses, remove course or add course.
 
 ### Core Application (Student's Perspective):
 

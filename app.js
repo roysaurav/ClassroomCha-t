@@ -43,7 +43,7 @@ app.use(expressValidator({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/', chat);
 app.use('/users', users);
 app.use('/chat', chat);
 app.use('/profile', profile);
