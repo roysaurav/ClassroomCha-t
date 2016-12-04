@@ -493,7 +493,6 @@ $(function() {
     chatRoomApp.$window.keydown(function(event) {
         // When the client hits ENTER on their keyboard
         if (event.which === 13) {
-            console.log(chatRoomApp.valid);
             if (chatRoomApp.valid) {
                 chatRoomApp.sendMessage();
             } else {
