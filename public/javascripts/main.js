@@ -380,6 +380,7 @@ $(function() {
         var tag = document.getElementById("tag-select").value;
 
         if (message) {
+
             chatRoomApp.$inputMessage.val('');
 
             chatRoomApp.addChatMessage({
@@ -505,7 +506,7 @@ $(function() {
                     } else {
 
                         chatRoomApp.username = chatRoomApp.cleanInput(resp_data[0].username.trim());
-                        chatRoomApp.valid = true;
+                        
                         chatRoomApp.$loginPage.fadeOut();
                         //chatRoomApp.$chatPage.show();
                         
@@ -523,6 +524,8 @@ $(function() {
                         } else {
                             chatRoomApp.student = true;
                         }
+
+                        chatRoomApp.valid = true;
                         chatRoomApp.userSetUp(resp_data[0]);
                         chatRoomApp.openProfile();
                         chatRoomApp.profilePage(resp_data[0]);
@@ -609,6 +612,7 @@ $(function() {
                 chatRoomApp.$loginPage.off('click');
                 chatRoomApp.socket.emit('add user', username);
                 chatRoomApp.student = true;
+                chatRoomApp.username = username;
                 chatRoomApp.userSetUp(resp);
                 chatRoomApp.openProfile();
                 chatRoomApp.profilePage(resp);
