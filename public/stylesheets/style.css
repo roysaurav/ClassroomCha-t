@@ -239,8 +239,13 @@ ul {
 }
 
 input:invalid {
-  background-color: #ffc6Bb;
-  outline: 2px solid red;
+background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  width: 400px;
 }
 
 select {
